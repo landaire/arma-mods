@@ -1,0 +1,37 @@
+GameProject {
+ ID "ReforgerEventsApi"
+ GUID "650B5C16AD650354"
+ TITLE "ReforgerEventsApi"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+ Configurations {
+  GameProjectConfig PC {
+   MenuManagerSettings MenuManagerSettings "{50C890C996B0A6FC}" {
+   }
+   WidgetManagerSettings WidgetManagerSettings "{AC4BE58770485E02}" {
+    StringTables {
+     StringTableDefinition "{65102E121EB82717}" {
+      StringTableSource "{91E0F6253032266E}Language/localization.st"
+      Languages {
+       LanguageDefinition "{65102E1210C27260}" {
+        Code "en_us"
+        StringTableRuntime "{FFABF1A438694BFC}Language/localization.en_us.conf"
+       }
+      }
+     }
+    }
+   }
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}

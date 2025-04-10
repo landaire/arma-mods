@@ -1,0 +1,270 @@
+ButtonWidgetClass {
+ Name "Button"
+ Slot AlignableSlot "{5578914CD81E58CA}" {
+  HorizontalAlign 3
+  VerticalAlign 3
+ }
+ Clipping False
+ components {
+  SCR_ButtonBaseComponent "{5578914E90C109B2}" {
+   m_bMouseOverToFocus 1
+   m_BackgroundDefault 0 0 0 0.784
+   m_BackgroundHovered 0.002 0.002 0.002 0.98
+   m_BackgroundSelected 0.761 0.392 0.078 1
+   m_BackgroundSelectedHovered 0.761 0.392 0.078 1
+   m_BackgroundClicked 0.761 0.392 0.078 1
+  }
+ }
+ style blank
+ {
+  SizeLayoutWidgetClass "{6510657977FB06A9}" {
+   Name "SizeLayout"
+   Slot ButtonWidgetSlot "{5548E6E7E6AEDDC1}" {
+    HorizontalAlign 3
+   }
+   AllowHeightOverride 1
+   HeightOverride 50
+   {
+    OverlayWidgetClass "{6510657977FB06AE}" {
+     Name "Overlay"
+     Slot ButtonWidgetSlot "{5548E6E7F213FB11}" {
+      HorizontalAlign 3
+      VerticalAlign 3
+      Padding 2 6 2 6
+     }
+     {
+      ImageWidgetClass "{6510657977FB06AD}" {
+       Name "Background"
+       Slot OverlayWidgetSlot "{5548E6E7DF4EE313}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+       Color 0.502 0 0 1
+      }
+      PanelWidgetClass "{6510657977FBA738}" {
+       Name "Border"
+       Slot OverlayWidgetSlot "{55367D8E4A13554A}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+        Padding -2 -2 -2 -2
+       }
+       Clipping False
+       Color 0.761 0.386 0.078 1
+       style outline_2px
+      }
+      HorizontalLayoutWidgetClass "{6510657977FBA739}" {
+       Name "HorizontalLayout"
+       Slot OverlayWidgetSlot "{5578914E99EDB46E}" {
+        HorizontalAlign 3
+        VerticalAlign 3
+       }
+       {
+        SizeLayoutWidgetClass "{6510657977FBA736}" : "{F679A6BFB364B900}UI/layouts/Editor/Effects/Effect_Badge_Mirrored.layout" {
+         Name "Badge0"
+         Slot LayoutSlot "{5706FDBB957D1F10}" {
+         }
+        }
+        HorizontalLayoutWidgetClass "{6510657977FBEEA0}" {
+         Name "PlayerNameHolder"
+         Slot LayoutSlot "{557EC52376510B40}" {
+          HorizontalAlign 0
+          VerticalAlign 1
+          Padding 0 0 0 0
+          SizeMode Fill
+          FillWeight 3
+         }
+         Clipping True
+         {
+          RichTextWidgetClass "{6510657977F464B0}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "PlayerName"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            VerticalAlign 1
+            Padding 0 0 0 0
+            SizeMode Fill
+            FillWeight 6
+           }
+           Text "Player Name"
+           "Font Size" 16
+           "Min Font Size" 14
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{6510657977F7378F}" {
+         Name "SizeLayout2"
+         Slot LayoutSlot "{59165EA42A1123EC}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 0 0 45 0
+         }
+         AllowMinDesiredWidth 1
+         MinDesiredWidth 40
+         MinDesiredHeight 0
+         AllowMaxDesiredWidth 1
+         MaxDesiredWidth 40
+         {
+          RichTextWidgetClass "{6510657977F7378E}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "Kills"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            SizeMode Fill
+           }
+           Text "1000"
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{6510657977F7603B}" {
+         Name "SizeLayout3"
+         Slot LayoutSlot "{59165EA401518716}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 0 0 47 0
+         }
+         AllowMinDesiredWidth 1
+         MinDesiredWidth 40
+         AllowMaxDesiredWidth 1
+         MaxDesiredWidth 40
+         {
+          RichTextWidgetClass "{6510657977F787B1}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "Deaths"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            SizeMode Fill
+           }
+           Text "1000"
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{65117DF3BDF71713}" {
+         Name "SizeLayout1"
+         Slot LayoutSlot "{59165EA409693704}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 0 0 47 0
+         }
+         AllowMinDesiredWidth 1
+         MinDesiredWidth 40
+         AllowMaxDesiredWidth 1
+         MaxDesiredWidth 40
+         {
+          RichTextWidgetClass "{65117DF3BDF71710}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "SuppliesDelivered"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            SizeMode Fill
+           }
+           Text "1000"
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{65117DF3BF724396}" {
+         Name "SizeLayout5"
+         Slot LayoutSlot "{59165EA409693704}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 0 0 47 0
+         }
+         AllowMinDesiredWidth 1
+         MinDesiredWidth 40
+         AllowMaxDesiredWidth 1
+         MaxDesiredWidth 40
+         {
+          RichTextWidgetClass "{65117DF3BF724395}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "SuppliesSpent"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            SizeMode Fill
+           }
+           Text "1000"
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{6510657977F787B2}" {
+         Name "SizeLayout4"
+         Slot LayoutSlot "{59165EA409693704}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 0 0 30 0
+         }
+         AllowMinDesiredWidth 1
+         MinDesiredWidth 40
+         AllowMaxDesiredWidth 1
+         MaxDesiredWidth 40
+         {
+          RichTextWidgetClass "{6510657977F7CB4C}" : "{45BA2EA46F09C0FF}UI/layouts/WidgetLibrary/RichTextWidgets/RichText_InteractiveSmall.layout" {
+           Name "Score"
+           Slot LayoutSlot "{5578914BF261DE96}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            SizeMode Fill
+           }
+           Text "1000"
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{6510657977F1BB4F}" {
+         Prefab "{5548E6E7E6AEDDA7}"
+         Name "SizeLayout"
+         Slot LayoutSlot "{62DE95B9DA74AC86}" {
+         }
+         "Is Enabled" 0
+         "Is Visible" 0
+         Clipping True
+         AllowWidthOverride 1
+         WidthOverride 26
+         AllowHeightOverride 1
+         HeightOverride 26
+         {
+          OverlayWidgetClass "{6510657977F1BB4E}" {
+           Prefab "{5548E6E7F213FBF1}"
+           Slot ButtonWidgetSlot "{5548E6E7F213FB11}" {
+            HorizontalAlign 1
+            VerticalAlign 1
+            Padding 0 0 0 0
+           }
+           {
+            ImageWidgetClass "{6510657977F1EB22}" {
+             Prefab "{5548E6E7DF4EE3F2}"
+             Color 1 1 1 0
+            }
+            PanelWidgetClass "{6510657977F20196}" {
+             Prefab "{5548E6E7D859FCBF}"
+             "Is Visible" 0
+            }
+            ScaleWidgetClass "{6510657977F20191}" {
+             Prefab "{55589476C896A09B}"
+             {
+              ImageWidgetClass "{6510657977F266DF}" {
+               Prefab "{55589476CBD910D4}"
+               Texture "{2EFEA2AF1F38E7F0}UI/Textures/Icons/icons_wrapperUI-64.imageset"
+               Image "disable"
+               Size 64 64
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+        SizeLayoutWidgetClass "{6510657977F266DC}" {
+         Name "SizeLayout0"
+         Slot LayoutSlot "{585C76FC579E4FC4}" {
+          HorizontalAlign 1
+          VerticalAlign 1
+          Padding 10 0 0 0
+         }
+         MaxDesiredWidth 0
+         AllowMaxDesiredHeight 1
+         MaxDesiredHeight 40
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

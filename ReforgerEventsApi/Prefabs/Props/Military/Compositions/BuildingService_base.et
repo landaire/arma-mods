@@ -1,0 +1,21 @@
+GenericEntity : "{10C26F96EF7A8CF5}Prefabs/Props/Core/Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  ActionsManagerComponent "{5CB66A0F7D87DD32}" {
+   additionalActions {
+    LRS_ShowGameStats "{6514075C582F4A3A}" {
+     ParentContextList {
+      "OpenFreeformBuilding"
+     }
+     UIInfo UIInfo "{6514075C582F4AF2}" {
+      Name "#LRS-ShowTeamStats"
+     }
+     VisibilityRange 10
+     Duration 0.5
+     "Sort Priority" 1
+     m_sActionNameNoSupplies "#AR-Campaign_Action_ShowBuildPreview_NoSupplies"
+    }
+   }
+  }
+ }
+}

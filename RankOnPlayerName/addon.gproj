@@ -1,0 +1,8 @@
+GameProject {
+ ID "RankOnPlayerName"
+ GUID "6513700F82DCDAD3"
+ TITLE "RankOnPlayerName"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}

@@ -1,0 +1,521 @@
+FrameWidgetClass {
+ Name "StatsPlayerList"
+ Slot AlignableSlot "{54D304FE6A541827}" {
+  HorizontalAlign 3
+  VerticalAlign 3
+ }
+ components {
+  SCR_SuperMenuComponent "{5F1A985A47948E91}" {
+  }
+ }
+ {
+  FrameWidgetClass "{65102E09BCA21DAE}" : "{777A38BB49472774}UI/layouts/WidgetLibrary/BaseElements/WLib_MenuBase.layout" {
+   Name "MenuBase0"
+   Slot FrameWidgetSlot "{54D8A1A6EA84F990}" {
+    Anchor 0.22 0.15 0.78 0.85
+    PositionX 0
+    OffsetLeft -300
+    PositionY 0
+    OffsetTop -100
+    SizeX 0
+    OffsetRight -300
+    SizeY 0
+    OffsetBottom -100
+   }
+   Color 0 0 0 1
+   {
+    BlurWidgetClass "{65102E09BCA21DA3}" : "{352322057FD78AE1}UI/layouts/WidgetLibrary/BaseElements/WLib_Blur.layout" {
+     Name "Blur1"
+     Slot FrameWidgetSlot "{5A2CA7C4E49A8180}" {
+      Anchor 0 0 1 1
+      PositionX 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX -1675.2
+      OffsetRight 0
+      SizeY -956
+      OffsetBottom 0
+     }
+     "Z Order" -1
+     Opacity 0.99
+     Color 0.007 0.012 0.014 1
+     Intensity 1
+     "Smooth Border" 0 0 0 0
+    }
+    BlurWidgetClass "{00000000E99E7D4A}" {
+     Prefab "{00000000E99E7D4A}"
+     "Is Visible" 0
+     Opacity 0.99
+     Color 0.007 0.012 0.014 0.718
+     Intensity 1
+    }
+    ImageWidgetClass "{00000000209D883B}" {
+     Prefab "{00000000209D883B}"
+     Slot FrameWidgetSlot "{5488B97C9D820763}" {
+     }
+    }
+    VerticalLayoutWidgetClass "{000000005ABA4553}" {
+     Prefab "{000000005ABA4553}"
+     {
+      SizeLayoutWidgetClass "{54ACA291E52533FB}" {
+       Prefab "{54ACA291E52533FB}"
+       {
+        OverlayWidgetClass "{00000000E8F5CC2D}" {
+         Prefab "{00000000E8F5CC2D}"
+         {
+          HorizontalLayoutWidgetClass "{65102E09BCA21DA7}" {
+           Name "FactionPlayerNumbersLayout"
+           Slot OverlayWidgetSlot "{5C84CBC25A1DD017}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+            Padding 0 0 0 10
+           }
+           "Z Order" 1
+           "Fill Origin" Right
+          }
+          TextWidgetClass "{0000000059B7F482}" {
+           Prefab "{0000000059B7F482}"
+           Text "#LRS-MenuHeader"
+          }
+         }
+        }
+       }
+      }
+      VerticalLayoutWidgetClass "{00000000974AC4C5}" {
+       Prefab "{00000000974AC4C5}"
+       components {
+        SCR_TabViewComponent "{546B27D01CA8A38D}" {
+         m_aElements {
+          SCR_TabViewContent "{54D8A1A639B785CC}" {
+           m_sTabButtonContent "#AR-PlayerList_All"
+          }
+         }
+         m_ColorBackground 0 0 0 0.529
+         m_fTabWidth 200
+        }
+       }
+       {
+        SizeLayoutWidgetClass "{0000000041B59A6F}" {
+         Prefab "{0000000041B59A6F}"
+         {
+          HorizontalLayoutWidgetClass "{54ACA2928A1FCB02}" {
+           Prefab "{54ACA2928A1FCB02}"
+           {
+            OverlayWidgetClass "{54ACA29336E9260F}" {
+             Prefab "{54ACA29336E9260F}"
+             Slot LayoutSlot "{54872531B0DFCE1C}" {
+              FillWeight 1
+             }
+             {
+              ImageWidgetClass "{65102E09BCA21DA5}" {
+               Name "Image0"
+               Slot OverlayWidgetSlot "{591885AE6A9F6DB9}" {
+                HorizontalAlign 3
+                VerticalAlign 3
+               }
+               "Z Order" -1
+               "Is Visible" 0
+               Color 0 0 0 1
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+        ImageWidgetClass "{000000002B6EC668}" {
+         Prefab "{000000002B6EC668}"
+         Slot LayoutSlot "{54871745AA809762}" {
+          Padding 0 0 0 0
+         }
+        }
+        OverlayWidgetClass "{000000004446F260}" {
+         Prefab "{000000004446F260}"
+         Slot LayoutSlot "{5454881316546B14}" {
+         }
+         Clipping Inherit
+         {
+          VerticalLayoutWidgetClass "{65102E09BCA21DBB}" {
+           Name "VerticalLayout0"
+           Slot OverlayWidgetSlot "{54E4AE2F1EE7EB55}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           {
+            OverlayWidgetClass "{65102E09BCA21DB9}" : "{4B7D3B2B5683B299}UI/layouts/WidgetLibrary/SortHeader/WLib_SortHeader.layout" {
+             Name "SortHeader"
+             Slot LayoutSlot "{572B31223FA1C12E}" {
+              HorizontalAlign 3
+              VerticalAlign 3
+             }
+             components {
+              SCR_SortHeaderComponent "{572B31209CA6A6FD}" {
+               m_iDefaultSortElement 1
+              }
+             }
+             {
+              HorizontalLayoutWidgetClass "{572B3122DE3D0134}" {
+               Prefab "{572B3122DE3D0134}"
+               {
+                ButtonWidgetClass "{65102E09BCA21DBD}" : "{BD4E4E7499842526}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Text.layout" {
+                 Name "sortName"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 103 0 0 0
+                  SizeMode Fill
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Name"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{5728EB2621FD960B}" {
+                   Prefab "{5728EB2621FD960B}"
+                   {
+                    OverlayWidgetClass "{5728EB2621FD9631}" {
+                     Prefab "{5728EB2621FD9631}"
+                     {
+                      HorizontalLayoutWidgetClass "{5728EB2621FD9633}" {
+                       Prefab "{5728EB2621FD9633}"
+                       {
+                        TextWidgetClass "{5728EB2621FD963D}" {
+                         Prefab "{5728EB2621FD963D}"
+                         Text "#AR-PlayerList_Name"
+                        }
+                        SizeLayoutWidgetClass "{5DB898E2D7BF1E37}" {
+                         Prefab "{5DB898E2D7BF1E37}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+                ButtonWidgetClass "{65102E09BCA21DB2}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
+                 Name "sortKills"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 0 0 15 0
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Kills"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{572B0ECF1C9872EE}" {
+                   Prefab "{572B0ECF1C9872EE}"
+                   {
+                    OverlayWidgetClass "{572B0ECF1C9872E9}" {
+                     Prefab "{572B0ECF1C9872E9}"
+                     {
+                      HorizontalLayoutWidgetClass "{572B0ECF1C9872EB}" {
+                       Prefab "{572B0ECF1C9872EB}"
+                       {
+                        ImageWidgetClass "{572B0ECF1C99DB17}" {
+                         Prefab "{572B0ECF1C99DB17}"
+                         Texture "{2EFEA2AF1F38E7F0}UI/Textures/Icons/icons_wrapperUI-64.imageset"
+                         Image "kill"
+                        }
+                        SizeLayoutWidgetClass "{5DB8E6D5CC23E084}" {
+                         Prefab "{5DB8E6D5CC23E084}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+                ButtonWidgetClass "{65102E09BCA21DB0}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
+                 Name "sortDeaths"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 0 0 25 0
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Deaths"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{572B0ECF1C9872EE}" {
+                   Prefab "{572B0ECF1C9872EE}"
+                   {
+                    OverlayWidgetClass "{572B0ECF1C9872E9}" {
+                     Prefab "{572B0ECF1C9872E9}"
+                     {
+                      HorizontalLayoutWidgetClass "{572B0ECF1C9872EB}" {
+                       Prefab "{572B0ECF1C9872EB}"
+                       {
+                        ImageWidgetClass "{572B0ECF1C99DB17}" {
+                         Prefab "{572B0ECF1C99DB17}"
+                         Texture "{2EFEA2AF1F38E7F0}UI/Textures/Icons/icons_wrapperUI-64.imageset"
+                         Image "death"
+                        }
+                        SizeLayoutWidgetClass "{5DB8E6D5CC23E084}" {
+                         Prefab "{5DB8E6D5CC23E084}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+                ButtonWidgetClass "{651065725EACC6D1}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
+                 Name "sortSuppliesDelivered"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 0 0 25 0
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Deaths"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{572B0ECF1C9872EE}" {
+                   Prefab "{572B0ECF1C9872EE}"
+                   {
+                    OverlayWidgetClass "{572B0ECF1C9872E9}" {
+                     Prefab "{572B0ECF1C9872E9}"
+                     {
+                      HorizontalLayoutWidgetClass "{572B0ECF1C9872EB}" {
+                       Prefab "{572B0ECF1C9872EB}"
+                       {
+                        ImageWidgetClass "{572B0ECF1C99DB17}" {
+                         Prefab "{572B0ECF1C99DB17}"
+                         Slot LayoutSlot "{56FAD1555B9EF647}" {
+                          HorizontalAlign 1
+                          VerticalAlign 1
+                         }
+                         "Ignore Cursor" 0
+                         Color 0.0706 0.5608 0.1922 1
+                         Texture "{2EFEA2AF1F38E7F0}UI/Textures/Icons/icons_wrapperUI-64.imageset"
+                         Image "supplies"
+                         Size 25 25
+                        }
+                        SizeLayoutWidgetClass "{5DB8E6D5CC23E084}" {
+                         Prefab "{5DB8E6D5CC23E084}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+                ButtonWidgetClass "{651065759772DD5F}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
+                 Name "sortSuppliesSpent"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 0 0 25 0
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Deaths"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{572B0ECF1C9872EE}" {
+                   Prefab "{572B0ECF1C9872EE}"
+                   {
+                    OverlayWidgetClass "{572B0ECF1C9872E9}" {
+                     Prefab "{572B0ECF1C9872E9}"
+                     {
+                      HorizontalLayoutWidgetClass "{572B0ECF1C9872EB}" {
+                       Prefab "{572B0ECF1C9872EB}"
+                       {
+                        ImageWidgetClass "{572B0ECF1C99DB17}" {
+                         Prefab "{572B0ECF1C99DB17}"
+                         Color 0.6235 0.1569 0.1569 1
+                         Texture "{2EFEA2AF1F38E7F0}UI/Textures/Icons/icons_wrapperUI-64.imageset"
+                         Image "supplies"
+                         Size 25 25
+                        }
+                        SizeLayoutWidgetClass "{5DB8E6D5CC23E084}" {
+                         Prefab "{5DB8E6D5CC23E084}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+                ButtonWidgetClass "{65102E09BCA21DB7}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
+                 Name "sortScore"
+                 Slot LayoutSlot "{5536D3214071F27B}" {
+                  Padding 0 0 10 0
+                 }
+                 "Is Enabled" 0
+                 components {
+                  SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_sName "Score"
+                  }
+                 }
+                 {
+                  SizeLayoutWidgetClass "{572B0ECF1C9872EE}" {
+                   Prefab "{572B0ECF1C9872EE}"
+                   {
+                    OverlayWidgetClass "{572B0ECF1C9872E9}" {
+                     Prefab "{572B0ECF1C9872E9}"
+                     {
+                      HorizontalLayoutWidgetClass "{572B0ECF1C9872EB}" {
+                       Prefab "{572B0ECF1C9872EB}"
+                       {
+                        ImageWidgetClass "{572B0ECF1C99DB17}" {
+                         Prefab "{572B0ECF1C99DB17}"
+                         Texture "{40D32D208FA71526}UI/Textures/PlayerList/score-icon_UI.edds"
+                         Image ""
+                         Size 24 24
+                        }
+                        SizeLayoutWidgetClass "{5DB8E6D5CC23E084}" {
+                         Prefab "{5DB8E6D5CC23E084}"
+                         "Is Enabled" 0
+                         Opacity 0
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+            ImageWidgetClass "{65102E09BCA21D8A}" {
+             Name "Image0"
+             Slot LayoutSlot "{54E4B229112548B2}" {
+             }
+             "Is Visible" 0
+             Color 0.761 0.392 0.078 1
+             Size 4 4
+            }
+            ScrollLayoutWidgetClass "{65102E09BCA24E11}" {
+             Name "ScrollLayout0"
+             Slot LayoutSlot "{54E4AE2F1EDE7399}" {
+              Padding 0 2 -24 2
+              SizeMode Fill
+             }
+             Color 0.761 0.386 0.078 1
+             components {
+              SCR_GamepadScrollComponent "{5EA28B93D5D585E3}" {
+              }
+             }
+             "Up rule" Explicit
+             "Up target" "SortName"
+             {
+              VerticalLayoutWidgetClass "{65102E09BCA24E13}" {
+               Name "Table"
+               Slot OverlayWidgetSlot "{54D8A1A6A29D8768}" {
+                HorizontalAlign 3
+                VerticalAlign 3
+                Padding 0 0 14 0
+               }
+               "Up rule" Explicit
+               "Up target" "SortHeader"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+      VerticalLayoutWidgetClass "{54ACA291480977C5}" {
+       Prefab "{54ACA291480977C5}"
+       {
+        HorizontalLayoutWidgetClass "{54B2E1ECF2166EB6}" {
+         Prefab "{54B2E1ECF2166EB6}"
+         Slot LayoutSlot "{54929003A731D081}" {
+          Padding 0 0 0 24
+         }
+         {
+          ImageWidgetClass "{000000000D58395B}" {
+           Prefab "{000000000D58395B}"
+           Color 0.144 0.144 0.144 1
+          }
+         }
+        }
+        HorizontalLayoutWidgetClass "{0000000059B6DBB4}" {
+         Prefab "{0000000059B6DBB4}"
+         components {
+          SCR_DynamicFooterComponent "{5DF6C513019B2C19}" {
+           m_fPadding 12
+           m_sLeftFooter "FooterLeft"
+          }
+         }
+         {
+          HorizontalLayoutWidgetClass "{65102E09BCA24E15}" {
+           Name "FooterLeft"
+           Slot LayoutSlot "{572AC16D2158EF1F}" {
+            SizeMode Fill
+           }
+           {
+            ButtonWidgetClass "{65102E09BCA291E3}" : "{08CF3B69CB1ACBC4}UI/layouts/WidgetLibrary/Buttons/WLib_NavigationButton.layout" {
+             Name "Friend"
+             Slot LayoutSlot "{54D8A1A5A6FB6703}" {
+              Padding 0 0 12 0
+             }
+             "Is Visible" 0
+             components {
+              SCR_InputButtonComponent "{5D346C3DD81D95CD}" {
+               m_sActionName "PlayerMenuFriend"
+               m_sLabel "#AR-PlayerList_AddFriend"
+              }
+             }
+            }
+           }
+          }
+          ButtonWidgetClass "{54ACA297FECC1128}" {
+           Prefab "{54ACA297FECC1128}"
+           Slot LayoutSlot "{54ACA297E9BAB648}" {
+            Padding 0 0 12 0
+           }
+           "Z Order" -1
+           components {
+            SCR_InputButtonComponent "{5D346C3DD81D95CD}" {
+             m_sLabel "#AR-QuickMenu_Close"
+            }
+           }
+          }
+          HorizontalLayoutWidgetClass "{56AC962104CF5CDD}" {
+           Prefab "{56AC962104CF5CDD}"
+           Slot LayoutSlot "{56AC962104CF5CEF}" {
+            SizeMode Fill
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}
