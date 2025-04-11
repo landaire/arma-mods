@@ -284,23 +284,10 @@ FrameWidgetClass {
                  components {
                   SCR_SortElementComponent "{5728A2511B52B59F}" {
                    m_aEffects {
-                    SCR_ButtonEffectColor "{651604960D8AA285}" {
-                     m_aTags {
-                      "all"
-                     }
-                     m_eEvents STATE_DEFAULT
-                     m_sWidgetName "Image"
-                     m_cDefault 0.07 0.558 0.191 1
-                     m_cHovered 0 0 0 0
-                     m_cActivated 0 0 0 0
-                     m_cActivatedHovered 0 0 0 0
-                     m_cDisabled 0 0 0 0
-                     m_cDisabledActivated 0 0 0 0
-                     m_cClicked 0 0 0 0
-                     m_cFocusGained 0 0 0 0
-                     m_cFocusLost 0 0 0 0
-                     m_cToggledOn 0 0 0 0
-                     m_cToggledOff 0 0 0 0
+                    SCR_ButtonEffectColor "{5DB6E72C4243D633}" {
+                     m_cDefault 0.071 0.561 0.192 1
+                     m_cFocusLost 0.071 0.561 0.192 1
+                     m_cToggledOff 0.071 0.561 0.192 1
                     }
                    }
                    m_sName "SuppliesDelivered"
@@ -349,6 +336,13 @@ FrameWidgetClass {
                  "Is Enabled" 0
                  components {
                   SCR_SortElementComponent "{5728A2511B52B59F}" {
+                   m_aEffects {
+                    SCR_ButtonEffectColor "{5DB6E72C4243D633}" {
+                     m_cDefault 0.624 0.157 0.157 1
+                     m_cFocusLost 0.624 0.157 0.157 1
+                     m_cToggledOff 0.624 0.157 0.157 1
+                    }
+                   }
                    m_sName "SuppliesSpent"
                   }
                  }
