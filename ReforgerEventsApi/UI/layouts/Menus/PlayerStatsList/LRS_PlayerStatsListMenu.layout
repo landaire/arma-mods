@@ -200,7 +200,7 @@ FrameWidgetClass {
                 ButtonWidgetClass "{65102E09BCA21DB2}" : "{44D139AA0C318F8D}UI/layouts/WidgetLibrary/SortHeader/WLib_ButtonSort_Image.layout" {
                  Name "sortKills"
                  Slot LayoutSlot "{5536D3214071F27B}" {
-                  Padding 0 0 15 0
+                  Padding 0 0 25 0
                  }
                  "Is Enabled" 0
                  components {
@@ -283,7 +283,27 @@ FrameWidgetClass {
                  "Is Enabled" 0
                  components {
                   SCR_SortElementComponent "{5728A2511B52B59F}" {
-                   m_sName "Deaths"
+                   m_aEffects {
+                    SCR_ButtonEffectColor "{651604960D8AA285}" {
+                     m_aTags {
+                      "all"
+                     }
+                     m_eEvents STATE_DEFAULT
+                     m_sWidgetName "Image"
+                     m_cDefault 0.07 0.558 0.191 1
+                     m_cHovered 0 0 0 0
+                     m_cActivated 0 0 0 0
+                     m_cActivatedHovered 0 0 0 0
+                     m_cDisabled 0 0 0 0
+                     m_cDisabledActivated 0 0 0 0
+                     m_cClicked 0 0 0 0
+                     m_cFocusGained 0 0 0 0
+                     m_cFocusLost 0 0 0 0
+                     m_cToggledOn 0 0 0 0
+                     m_cToggledOff 0 0 0 0
+                    }
+                   }
+                   m_sName "SuppliesDelivered"
                   }
                  }
                  {
@@ -329,7 +349,7 @@ FrameWidgetClass {
                  "Is Enabled" 0
                  components {
                   SCR_SortElementComponent "{5728A2511B52B59F}" {
-                   m_sName "Deaths"
+                   m_sName "SuppliesSpent"
                   }
                  }
                  {

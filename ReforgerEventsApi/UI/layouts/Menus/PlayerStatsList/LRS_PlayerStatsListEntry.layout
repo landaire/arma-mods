@@ -94,7 +94,7 @@ ButtonWidgetClass {
          Slot LayoutSlot "{59165EA42A1123EC}" {
           HorizontalAlign 1
           VerticalAlign 1
-          Padding 0 0 45 0
+          Padding 0 0 55 0
          }
          AllowMinDesiredWidth 1
          MinDesiredWidth 40
@@ -118,7 +118,7 @@ ButtonWidgetClass {
          Slot LayoutSlot "{59165EA401518716}" {
           HorizontalAlign 1
           VerticalAlign 1
-          Padding 0 0 47 0
+          Padding 0 0 55 0
          }
          AllowMinDesiredWidth 1
          MinDesiredWidth 40
@@ -164,7 +164,7 @@ ButtonWidgetClass {
          Slot LayoutSlot "{59165EA409693704}" {
           HorizontalAlign 1
           VerticalAlign 1
-          Padding 0 0 47 0
+          Padding 0 0 55 0
          }
          AllowMinDesiredWidth 1
          MinDesiredWidth 40
