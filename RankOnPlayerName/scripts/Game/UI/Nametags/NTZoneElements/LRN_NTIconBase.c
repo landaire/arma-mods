@@ -1,3 +1,7 @@
+modded enum ENameTagEntityState {
+	GROUP_LEADER = HIDDEN << 1,
+}
+
 // Override NameTagData so that we can set the platform icon to be not visible
 // if it' s disabled. This will ensure that the player rank
 // is immediately next to the player name.
@@ -9,6 +13,23 @@ modded class SCR_NameTagData {
 			widget.SetVisible(false);
 		} else if (visible) {
 			widget.SetVisible(true);
+		}
+	}
+	
+	override void SetGroup(SCR_AIGroup group) {
+		super.SetGroup(group);
+		if (group) {
+			// Check if this player is the group leader
+			if (m_NTDisplay.m_CurrentPlayerTag.m_iGroupID == m_iGroupID && group.IsPlayerLeader(m_NTDisplay.m_CurrentPlayerTag.m_iPlayerID)) {
+				// Remove the GROUP_MEMBER flag
+				DeactivateEntityState(ENameTagEntityState.GROUP_MEMBER);
+				ActivateEntityState(ENameTagEntityState.GROUP_LEADER);
+			}
+		} else {
+			// Remove the group leader flag
+			if (m_eEntityStateFlags & ENameTagEntityState.GROUP_MEMBER) {
+				DeactivateEntityState(ENameTagEntityState.GROUP_LEADER);
+			}
 		}
 	}
 }
