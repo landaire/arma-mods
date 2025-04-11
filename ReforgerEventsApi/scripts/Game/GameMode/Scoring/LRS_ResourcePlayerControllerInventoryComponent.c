@@ -34,19 +34,29 @@ modded class SCR_ResourcePlayerControllerInventoryComponent {
 		}
 		
 		SCR_PlayerController player = SCR_PlayerController.Cast(GetOwner());
-		if (player != null && resourceFaction != null) {
-			// Check if this faction matches the faction of the container we're taking resources from. 
-			if (player.GetLocalControlledEntityFaction().IsFactionFriendly(resourceFaction.GetAffiliatedFaction())) {
-				// Check flags indicating if we should notify in this case.
-				//
-				// If this is an editable parent, we're probably taking supplies from the supply storage
-				// and loading it up into something.
-				if (editableParent == null) {
-					LRS_NotifySuppliesConsumed(player.GetPlayerId(), resourceValue);
-				}
+				
+		if (player != null && resourceFaction != null && IsConsumingFriendlyResources(player, resourceFaction.GetAffiliatedFaction())) {
+			// Check flags indicating if we should notify in this case.
+			//
+			// If this is an editable parent, we're probably taking supplies from the supply storage
+			// and loading it up into something.
+			if (editableParent == null) {
+				LRS_NotifySuppliesConsumed(player.GetPlayerId(), resourceValue);
 			}
 		}
 		
 		return true;
+	}
+	
+	bool IsConsumingFriendlyResources(SCR_PlayerController player, Faction resourceFaction) {
+		FactionAffiliationComponent playerFactionComponent = FactionAffiliationComponent.Cast(player.FindComponent(FactionAffiliationComponent));
+		// Neutral faction which I guess should default to consuming?
+		if (!playerFactionComponent) {
+			return true;
+		}
+		
+		
+		// Check if this faction matches the faction of the container we're taking resources from. 
+		return playerFactionComponent.GetAffiliatedFaction().IsFactionFriendly(resourceFaction);
 	}
 }
