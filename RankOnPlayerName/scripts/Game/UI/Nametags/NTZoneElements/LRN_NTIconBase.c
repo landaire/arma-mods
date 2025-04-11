@@ -1,11 +1,30 @@
+modded enum ENameTagFlags {
+	GROUP_UPDATE = NAME_UPDATE << 1,
+}
+
 modded enum ENameTagEntityState {
 	GROUP_LEADER = HIDDEN << 1,
 }
+
+//modded class SCR_NameTagRulesetBase {
+//	override protected bool DisableTag(SCR_NameTagData data, float timeSlice) {
+//		bool result = super.DisableTag(data, timeSlice);
+//	
+//		if (data.m_Flags & ENameTagFlags.NAME_UPDATE) {
+//			data.m_Flags |= ENameTagFlags.GROUP_UPDATE;
+//		}
+//		
+//		return result;
+//	}
+//}
 
 // Override NameTagData so that we can set the platform icon to be not visible
 // if it' s disabled. This will ensure that the player rank
 // is immediately next to the player name.
 modded class SCR_NameTagData {
+	string m_sGroupName = ""; // entity group name or name formatting
+	bool m_bIsSameGroup = false;
+	
 	override void SetVisibility(Widget widget, bool visible, float visibleOpacity, bool animate = true) {
 		super.SetVisibility(widget, visible, visibleOpacity, animate);
 		
@@ -19,18 +38,73 @@ modded class SCR_NameTagData {
 	override void SetGroup(SCR_AIGroup group) {
 		super.SetGroup(group);
 		if (group) {
+			m_bIsSameGroup = m_NTDisplay.m_CurrentPlayerTag.m_iGroupID == m_iGroupID;
 			// Check if this player is the group leader
-			if (m_NTDisplay.m_CurrentPlayerTag.m_iGroupID == m_iGroupID && group.IsPlayerLeader(m_NTDisplay.m_CurrentPlayerTag.m_iPlayerID)) {
+			if (m_bIsSameGroup && group.IsPlayerLeader(m_iPlayerID)) {				
 				// Remove the GROUP_MEMBER flag
 				DeactivateEntityState(ENameTagEntityState.GROUP_MEMBER);
 				ActivateEntityState(ENameTagEntityState.GROUP_LEADER);
+			} else {
+				m_bIsSameGroup = false;
 			}
 		} else {
+			m_bIsSameGroup = false;
+			
 			// Remove the group leader flag
 			if (m_eEntityStateFlags & ENameTagEntityState.GROUP_MEMBER) {
 				DeactivateEntityState(ENameTagEntityState.GROUP_LEADER);
 			}
 		}
+		
+		m_Flags |= ENameTagFlags.GROUP_UPDATE;
+	}
+	
+	override protected bool UpdateEntityStateFlags() {
+		bool result = super.UpdateEntityStateFlags();
+		
+		if (m_Flags & ENameTagFlags.NAME_UPDATE) {
+			m_Flags |= ENameTagFlags.GROUP_UPDATE;
+		}
+		
+		return result;
+	}
+	
+	override void UpdateTagPos() {
+		super.UpdateTagPos();
+		
+		if (m_Flags & ENameTagFlags.NAME_UPDATE) {
+			m_Flags |= ENameTagFlags.GROUP_UPDATE;
+		}
+	}
+
+
+	override void InitData(SCR_NameTagConfig config) {
+		super.InitData(config);
+		
+		GetGroupName(m_sName);
+	}
+	
+		//------------------------------------------------------------------------------------------------
+	//! Get/update nametag squad's name
+	//! \param[out] name Name or formatting of name
+	//! \param[out] names If uses formating: Firstname, Alias and Surname (Alias can be an empty string)
+	void GetGroupName(out string name)
+	{
+		if  (m_GroupManager == null) {
+			return;
+		}
+		
+		SCR_AIGroup group = m_GroupManager.GetPlayerGroup(m_iPlayerID);
+		if (group != null) {
+			m_sGroupName = group.GetName();
+			if (m_sGroupName.IsEmpty()) {
+				string company, platoon, squad, character, format;
+				group.GetCallsigns(company, platoon, squad, character, format);
+				m_sGroupName = WidgetManager.Translate(format, company, platoon, squad, character);
+			}
+		}
+		
+		name = m_sGroupName;
 	}
 }
 

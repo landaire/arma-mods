@@ -1,0 +1,237 @@
+FrameWidgetClass {
+ Name "NameTag"
+ Slot FrameWidgetSlot "{5D9887A52A126382}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 1920
+  OffsetRight -1920
+  SizeY 1080
+  OffsetBottom -1080
+ }
+ Color 1 1 1 1
+ {
+  HorizontalLayoutWidgetClass "{6517450A21044622}" {
+   Name "HorizontalLayoutNT"
+   Slot FrameWidgetSlot "{51C4C0A5BAFB2375}" {
+    OffsetLeft 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
+    Alignment 0.5 0.5
+    SizeToContent 1
+   }
+   Clipping True
+   Color 1 1 1 1
+   {
+    FrameWidgetClass "{6517450A5B6079A2}" {
+     Name "RankIconFrame"
+     Slot LayoutSlot "{6517450D99ADAF40}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+     }
+     "Inherit Color" 1
+     {
+      ImageWidgetClass "{6517450A5B6079A3}" {
+       Name "IconShadowRank"
+       Slot FrameWidgetSlot "{650D5A36D3296A0A}" {
+        SizeToContent 1
+       }
+       IsPixelPerfect 0
+       Color 0 0 0 1
+       "Inherit Color" 1
+       Texture "{00FE3DBDFD15227B}UI/Textures/Icons/icons_wrapperUI-glow.imageset"
+       Image "platform-playstation"
+       Size 32 32
+      }
+      ImageWidgetClass "{6517450A5B61E433}" {
+       Name "IconNTRank"
+       Slot FrameWidgetSlot "{650D5A36A653EF84}" {
+        SizeToContent 1
+       }
+       IsPixelPerfect 0
+       Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
+       Image "platform-playstation"
+       Size 32 32
+      }
+     }
+    }
+    FrameWidgetClass "{6517450A21044620}" {
+     Name "PlatformIconFrame"
+     Slot LayoutSlot "{615481F1E61A3068}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+     }
+     "Inherit Color" 1
+     {
+      ImageWidgetClass "{6517450A21044621}" {
+       Name "IconShadowPlatform"
+       Slot FrameWidgetSlot "{55E0813E4A6948D6}" {
+        OffsetLeft 0
+        OffsetTop 0
+        OffsetRight -100
+        OffsetBottom -30
+        SizeToContent 1
+       }
+       IsPixelPerfect 0
+       Color 0 0 0 0.5
+       "Inherit Color" 1
+       Texture "{00FE3DBDFD15227B}UI/Textures/Icons/icons_wrapperUI-glow.imageset"
+       Image "platform-playstation"
+       Size 32 32
+      }
+      ImageWidgetClass "{6517450A21044626}" {
+       Name "IconNTPlatform"
+       Slot FrameWidgetSlot "{55E0813E4A6948D6}" {
+        PositionX 0
+        OffsetLeft 0
+        PositionY 0
+        OffsetTop 0
+        OffsetRight -100
+        OffsetBottom -30
+        SizeToContent 1
+       }
+       IsPixelPerfect 0
+       Color 1 1 1 1
+       "Inherit Color" 1
+       Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
+       Image "platform-playstation"
+       Size 32 32
+      }
+     }
+    }
+    VerticalLayoutWidgetClass "{6517450A40A49B9B}" {
+     Name "TextVerticalLayout"
+     Slot LayoutSlot "{6517450D99ADAC29}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+     }
+     {
+      FrameWidgetClass "{6517450A2104775E}" {
+       Name "FrameText"
+       Slot LayoutSlot "{51C4C0A5BAFB20D2}" {
+        HorizontalAlign 1
+        VerticalAlign 1
+       }
+       Color 1 1 1 1
+       "Inherit Color" 1
+       {
+        TextWidgetClass "{6517450A2104775C}" {
+         Name "PlayerName"
+         Slot FrameWidgetSlot "{51DC7B064D3F5743}" {
+          PositionX 0
+          OffsetLeft 0
+          PositionY 0
+          OffsetTop 0
+          SizeX 0
+          OffsetRight 0
+          SizeY 0
+          OffsetBottom 0
+          Alignment 0 0
+          SizeToContent 1
+         }
+         Color 1 1 1 1
+         "Inherit Color" 1
+         Text "My very long Username"
+         "Font Size" 16
+         "Min Font Size" 16
+         "Horizontal Alignment" Center
+         "Vertical Alignment" Center
+         FontProperties FontProperties "{51D0F5FA95A61812}" {
+          Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+          DisabledColor 0.1981 0.1981 0.1981 1
+          OutlineSize 0
+          OutlineColor 0.305 0.305 0.305 1
+          ShadowSize 10
+          ShadowColor 0 0 0 1
+         }
+        }
+       }
+      }
+      FrameWidgetClass "{6517450A40A49B99}" {
+       Name "FrameSquadText"
+       Slot LayoutSlot "{65173987E0D9F1B8}" {
+        HorizontalAlign 1
+        VerticalAlign 1
+       }
+       "Inherit Color" 1
+       {
+        TextWidgetClass "{6517450A40A4AFF7}" {
+         Name "GroupName"
+         Slot FrameWidgetSlot "{651739818D0D05D2}" {
+          OffsetLeft 0
+          OffsetTop 0
+          SizeX 0
+          OffsetRight 0
+          SizeY 0
+          OffsetBottom 0
+          SizeToContent 1
+         }
+         "Inherit Color" 1
+         Text "My very long squad name"
+         "Font Size" 16
+         "Min Font Size" 16
+         "Horizontal Alignment" Center
+         "Vertical Alignment" Center
+         FontProperties FontProperties "{65173982399894C1}" {
+          Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+          DisabledColor 0.1981 0.1981 0.1981 1
+          OutlineColor 0.305 0.305 0.305 1
+          ShadowSize 10
+         }
+        }
+       }
+      }
+     }
+    }
+    FrameWidgetClass "{6517450A2104A0C5}" {
+     Name "FWIcon"
+     Slot LayoutSlot "{5D9CD06AC931D183}" {
+      HorizontalAlign 1
+      VerticalAlign 1
+      FillWeight 10
+     }
+     {
+      ImageWidgetClass "{6517450A2104A0C4}" {
+       Name "IconShadowNT"
+       Slot FrameWidgetSlot "{55E0813E4A6948D6}" {
+        OffsetLeft 0
+        OffsetTop 0
+        OffsetRight -100
+        OffsetBottom -30
+        Alignment 0.2 0
+        SizeToContent 1
+       }
+       "Is Visible" 0
+       IsPixelPerfect 0
+       "Inherit Color" 1
+       Texture "{70E828A2F6EBE7D0}UI/Textures/Nametags/nametagicons.imageset"
+       Image "death-shadow"
+       Size 64 64
+      }
+      ImageWidgetClass "{6517450A2104CB59}" {
+       Name "IconNT"
+       Slot FrameWidgetSlot "{55E0813E4A6948D6}" {
+        PositionX 0
+        OffsetLeft 0
+        PositionY 0
+        OffsetTop 0
+        OffsetRight -100
+        OffsetBottom -30
+        Alignment 0.2 0
+        SizeToContent 1
+       }
+       IsPixelPerfect 0
+       Color 1 1 1 1
+       "Inherit Color" 1
+       Texture "{70E828A2F6EBE7D0}UI/Textures/Nametags/nametagicons.imageset"
+       Image "death"
+       Size 64 64
+      }
+     }
+    }
+   }
+  }
+ }
+}
