@@ -150,10 +150,8 @@ FrameWidgetClass {
        }
       }
       FrameWidgetClass "{6517450A40A49B99}" {
-       Name "FrameSquadText"
-       Slot LayoutSlot "{65173987E0D9F1B8}" {
-        HorizontalAlign 1
-        VerticalAlign 1
+       Name "FrameGroupText"
+       Slot LayoutSlot {
        }
        "Inherit Color" 1
        {

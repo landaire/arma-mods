@@ -22,7 +22,7 @@ class LRN_NTGroupName : SCR_NTTextBase
 			
 			GetText(data, name, nameParams);
 			
-			if (name.IsEmpty())
+			if (name.IsEmpty() || data.m_bIsSameGroup)
 				data.SetVisibility(TextWidget.Cast( data.m_aNametagElements[index] ), false, 0, false);
 			else {
 				SetText(data, name, nameParams, index);
