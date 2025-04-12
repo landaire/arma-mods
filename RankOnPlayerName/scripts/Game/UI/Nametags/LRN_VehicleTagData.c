@@ -22,4 +22,12 @@ modded class SCR_VehicleTagData
 		
 		return result;
 	}
+	
+	override protected void UpdateMainTag() {
+		super.UpdateMainTag();
+		if (m_MainTag.m_eEntityStateFlags & ENameTagEntityState.GROUP_LEADER)
+			ActivateEntityState(ENameTagEntityState.GROUP_LEADER);
+		else if (m_eEntityStateFlags & ENameTagEntityState.GROUP_LEADER)
+			DeactivateEntityState(ENameTagEntityState.GROUP_LEADER);
+	}
 };

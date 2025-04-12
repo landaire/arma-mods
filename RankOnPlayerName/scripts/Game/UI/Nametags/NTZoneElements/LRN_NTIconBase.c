@@ -6,33 +6,36 @@ modded enum ENameTagEntityState {
 	GROUP_LEADER = HIDDEN << 1,
 }
 
-//modded class SCR_NameTagRulesetBase {
-//	override protected bool DisableTag(SCR_NameTagData data, float timeSlice) {
-//		bool result = super.DisableTag(data, timeSlice);
-//	
-//		if (data.m_Flags & ENameTagFlags.NAME_UPDATE) {
-//			data.m_Flags |= ENameTagFlags.GROUP_UPDATE;
-//		}
-//		
-//		return result;
-//	}
-//}
+[BaseContainerProps()]
+class LRN_NameTagRulesetFriendlies : SCR_NameTagRulesetFriendlies {
+	override protected bool DisableTag(SCR_NameTagData data, float timeSlice) {
+		bool result = super.DisableTag(data, timeSlice);
+	
+		if (data.m_Flags & ENameTagFlags.NAME_UPDATE) {
+			data.m_Flags |= ENameTagFlags.GROUP_UPDATE;
+		}
+		
+		return result;
+	}
+}
 
 // Override NameTagData so that we can set the platform icon to be not visible
 // if it' s disabled. This will ensure that the player rank
 // is immediately next to the player name.
 modded class SCR_NameTagData {
 	string m_sGroupName = ""; // entity group name or name formatting
-	bool m_bIsSameGroup = false;
+	// default to true since it seems like SetGroup() isn't always called,
+	// and we want to ensure that random tags aren't randomly showing.
+	bool m_bIsSameGroup = false;  
 	
 	override void SetVisibility(Widget widget, bool visible, float visibleOpacity, bool animate = true) {
-		super.SetVisibility(widget, visible, visibleOpacity, animate);
-		
 		if (!visible && !animate) {
 			widget.SetVisible(false);
 		} else if (visible) {
 			widget.SetVisible(true);
 		}
+		
+		super.SetVisibility(widget, visible, visibleOpacity, animate);
 	}
 	
 	override void SetGroup(SCR_AIGroup group) {
@@ -44,8 +47,6 @@ modded class SCR_NameTagData {
 				// Remove the GROUP_MEMBER flag
 				DeactivateEntityState(ENameTagEntityState.GROUP_MEMBER);
 				ActivateEntityState(ENameTagEntityState.GROUP_LEADER);
-			} else {
-				m_bIsSameGroup = false;
 			}
 		} else {
 			m_bIsSameGroup = false;
@@ -96,11 +97,16 @@ modded class SCR_NameTagData {
 		
 		SCR_AIGroup group = m_GroupManager.GetPlayerGroup(m_iPlayerID);
 		if (group != null) {
-			m_sGroupName = group.GetName();
-			if (m_sGroupName.IsEmpty()) {
-				string company, platoon, squad, character, format;
-				group.GetCallsigns(company, platoon, squad, character, format);
-				m_sGroupName = WidgetManager.Translate(format, company, platoon, squad, character);
+			string customName = group.GetCustomName();
+			
+			string company, platoon, squad, character, format;
+			group.GetCallsigns(company, platoon, squad, character, format);
+			string nonCustomName = WidgetManager.Translate(format, company, platoon, squad, character);
+			
+			if (customName.IsEmpty()) {
+				m_sGroupName = nonCustomName;
+			} else {
+				m_sGroupName = string.Format("%1 (%2)", customName, nonCustomName);
 			}
 		}
 		
@@ -113,6 +119,7 @@ class LRN_IconRank : SCR_NTIconBase
 {	
 	// TODO: not necessary unless we add a toggle for disabling player ranks
 	BaseContainer m_GameplaySettings;
+	bool visible = false;
 
 	//------------------------------------------------------------------------------------------------	
 	override void SetDefaults(SCR_NameTagData data, int index)
@@ -123,9 +130,7 @@ class LRN_IconRank : SCR_NTIconBase
 		
 		if (!m_GameplaySettings)
 			m_GameplaySettings = GetGame().GetGameUserSettings().GetModule("SCR_GameplaySettings");
-		
-		data.SetVisibility(iWidget, false, 0, false);
-		
+				
 		if (!m_bScaleElement)
 			FrameSlot.SetSize(iWidget, m_iImageSizeMin, m_iImageSizeMin);
 		
@@ -158,7 +163,13 @@ class LRN_IconRank : SCR_NTIconBase
 			{
 				iWidget.LoadImageFromSet(0, SCR_XPInfoDisplay.GetRankIconImageSet(), rankIcon);
 				iWidget.SetColor(Color.FromInt(UIColors.CONTRAST_COLOR.PackToInt()));
-				data.SetVisibility(iWidget, true, 100, false);
+				if (!visible) {
+					visible = true;
+					data.SetVisibility(iWidget, true, 100, false);
+				}
+			} else if (visible) {
+				visible = false;
+				data.SetVisibility(iWidget, false, 0, false);
 			}
 		}
 		else if (data.m_eType == ENameTagEntityType.VEHICLE)
@@ -183,11 +194,16 @@ class LRN_IconRank : SCR_NTIconBase
 			auto rank = rankComponent.GetCharacterRankName(mainPlayerController);
 		
 			ResourceName rankIcon = rankComponent.GetCharacterRankInsignia(mainPlayerController);
-			if (rankIcon)
-			{
+			if (rankIcon) {
 				iWidget.LoadImageFromSet(0, SCR_XPInfoDisplay.GetRankIconImageSet(), rankIcon);
 				iWidget.SetColor(Color.FromInt(UIColors.CONTRAST_COLOR.PackToInt()));
-				data.SetVisibility(iWidget, true, 100, false);
+				if (!visible) {
+					visible = true;
+					data.SetVisibility(iWidget, true, 100, false);
+				}
+			} else if (visible) {
+				visible = false;
+				data.SetVisibility(iWidget, false, 0, false);
 			}
 		}
 	}
@@ -231,7 +247,13 @@ class LRN_IconRank : SCR_NTIconBase
 			{
 				image.LoadImageFromSet(0, SCR_XPInfoDisplay.GetRankIconImageSet(), rankIcon);
 				image.SetColor(Color.FromInt(UIColors.CONTRAST_COLOR.PackToInt()));
-				data.SetVisibility(image, true, 100, false);
+				if (!visible) {
+					visible = true;
+					data.SetVisibility(image, true, 100, false);
+				}
+			} else if (visible) {
+				visible = false;
+				data.SetVisibility(image, false, 0, false);
 			}
 		} 
 		else if (data.m_eType == ENameTagEntityType.VEHICLE)
@@ -260,7 +282,13 @@ class LRN_IconRank : SCR_NTIconBase
 			{
 				image.LoadImageFromSet(0, SCR_XPInfoDisplay.GetRankIconImageSet(), rankIcon);
 				image.SetColor(Color.FromInt(UIColors.CONTRAST_COLOR.PackToInt()));
-				data.SetVisibility(image, true, 100, false);
+				if (!visible) {
+					visible = true;
+					data.SetVisibility(image, true, 100, false);
+				}
+			} else if (visible) {
+				visible = false;
+				data.SetVisibility(image, false, 0, false);
 			}
 		}
 	}
