@@ -1,0 +1,190 @@
+FrameWidgetClass {
+ Name "lrmmMapMarkerRootFrame"
+ Slot FrameWidgetSlot "{5D2691F3AE61A7FC}" {
+  Anchor 0 0 0 0
+  PositionX 0
+  OffsetLeft 0
+  PositionY 0
+  OffsetTop 0
+  SizeX 66
+  OffsetRight -66
+  SizeY 66
+  OffsetBottom -66
+  Alignment 0.5 0.5
+ }
+ "Z Order" 60
+ Clipping False
+ "Ignore Cursor" 0
+ components {
+  LRMM_MapMarkerComponent "{65197BDE7B9E85B8}" {
+  }
+ }
+ {
+  TextWidgetClass "{651968923CD2B6DF}" {
+   Name "MarkerText"
+   Slot FrameWidgetSlot "{5F0E93C07EC242E0}" {
+    Anchor 0.5 0 0.5 0
+    OffsetLeft 0
+    PositionY 4
+    OffsetTop 4
+    SizeX 100
+    OffsetRight -100
+    SizeY 20
+    OffsetBottom -24
+    Alignment 0.5 1
+   }
+   Clipping False
+   Color 0 0.001 0 1
+   Text ""
+   "Font Size" 20
+   "Min Font Size" 20
+   "Horizontal Alignment" Center
+   FontProperties FontProperties "{5D2693726AAD1299}" {
+    Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+    Bold 1
+    ShadowSize 3
+   }
+  }
+  ImageWidgetClass "{651968923CD2B6DD}" {
+   Name "MarkerIcon"
+   Slot FrameWidgetSlot "{5F0E93C065A8881F}" {
+    Anchor 0.5 0.5 0.5 0.5
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 56
+    OffsetRight -56
+    SizeY 56
+    OffsetBottom -56
+    Alignment 0.5 0.5
+    SizeToContent 1
+   }
+   Clipping False
+   Texture "{1228936E5DB30403}UI/Textures/GroupManagement/FlagIcons/GroupFlagsBlufor.imageset"
+   Image "infantry"
+   Size 56 35
+  }
+  FrameWidgetClass "{651968923CD2B6DC}" {
+   Name "MembershipIcon"
+   Slot FrameWidgetSlot "{5F0E93C1F41D1516}" {
+    Anchor 0 0.5 0 0.5
+    PositionX 0
+    OffsetLeft 0
+    OffsetTop 0
+    SizeX 100
+    OffsetRight -100
+    SizeY 30
+    OffsetBottom -30
+    Alignment 0.4 0.5
+    SizeToContent 1
+   }
+   {
+    ImageWidgetClass "{651968923CD2EE2E}" {
+     Name "OwnSquadBackground"
+     Slot FrameWidgetSlot "{5F0E93EEA4FFA3F9}" {
+      Anchor 0.5 0 0.5 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX 100
+      OffsetRight -100
+      SizeY 30
+      OffsetBottom -30
+      Alignment 0.5 0
+      SizeToContent 1
+     }
+     "Is Visible" 0
+     Clipping False
+     Color 0 0 0 1
+     Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
+     Image "pie100"
+     Size 40 40
+     MaskImage "pie100"
+     "Shadow Offset" 0 0
+     "Shadow Size Increase" 0 0
+    }
+    ImageWidgetClass "{651968923CD2EE21}" {
+     Name "OwnSquadIcon"
+     Slot FrameWidgetSlot "{5F0E93EB5A382C43}" {
+      Anchor 0.5 0 0.5 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX 100
+      OffsetRight -100
+      SizeY 30
+      OffsetBottom -30
+      Alignment 0.5 0
+      SizeToContent 1
+     }
+     "Is Visible" 0
+     Clipping False
+     Texture "{3262679C50EF4F01}UI/Textures/Icons/icons_wrapperUI.imageset"
+     Image "squad"
+     Size 40 40
+     "Shadow Offset" 0 0
+     "Shadow Size Increase" 0 0
+    }
+    ImageWidgetClass "{651968923CD2EE20}" {
+     Name "OwnSquadIconGlow"
+     Slot FrameWidgetSlot "{5F02A163762C88D1}" {
+      Anchor 0.5 0 0.5 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX 32
+      OffsetRight -32
+      SizeY 32
+      OffsetBottom -32
+      Alignment 0.5 0
+      SizeToContent 1
+     }
+     "Is Visible" 0
+     Opacity 0.5
+     Clipping False
+     Color 0 0 0 1
+     Texture "{00FE3DBDFD15227B}UI/Textures/Icons/icons_wrapperUI-glow.imageset"
+     Image "squad"
+     Size 40 40
+     "Shadow Offset" 0 0
+     "Shadow Size Increase" 0 0
+    }
+   }
+  }
+  SizeLayoutWidgetClass "{651968923CD21C6F}" {
+   Name "SymbolWidget"
+   Slot FrameWidgetSlot "{5F0E93C1FC876F17}" {
+    Anchor 0 0 1 1
+    PositionX 33
+    PositionY 33
+    SizeX -66
+    OffsetRight 0
+    SizeY -66
+    OffsetBottom 0
+    SizeToContent 1
+   }
+   "Is Enabled" 0
+   "Is Visible" 0
+   WidthOverride 56
+   HeightOverride 56
+   {
+    OverlayWidgetClass "{651968923CD21C6C}" {
+     Name "SymbolOverlay"
+     Slot AlignableSlot "{5DB880D509AA11C2}" {
+      HorizontalAlign 3
+      VerticalAlign 3
+     }
+     components {
+      SCR_MilitarySymbolUIComponent "{5DB880D56B45FA22}" {
+       m_MilitarySymbol SCR_MilitarySymbol "{5DB880D56FF1176A}" {
+        m_Identity BLUFOR
+        m_Icons INFANTRY
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

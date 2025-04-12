@@ -1,0 +1,8 @@
+GameProject {
+ ID "ReworkedMapMarkers"
+ GUID "6519622E8F887F7F"
+ TITLE "ReworkedMapMarkers"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}

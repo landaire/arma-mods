@@ -1,0 +1,8 @@
+SCR_MapMarkerEntity {
+ ID "65197BDE9386F901"
+ components {
+  RplComponent "{65197BDE9386F916}" {
+  }
+ }
+ Flags 0
+}

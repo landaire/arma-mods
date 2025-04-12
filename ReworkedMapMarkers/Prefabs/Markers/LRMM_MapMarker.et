@@ -1,0 +1,11 @@
+LRMM_MapMarker {
+ ID "65196892283CC08A"
+ components {
+  RplComponent "{65196892283CC0B6}" {
+   "Parent Node From Parent Entity" 0
+   SpatialRelevancy 0
+   Streamable Disabled
+  }
+ }
+ Flags 0
+}
