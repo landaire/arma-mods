@@ -1,0 +1,59 @@
+FrameWidgetClass {
+ Name "groupInfoRoot"
+ Slot FrameWidgetSlot "{5E12829690E75F47}" {
+  OffsetLeft 0
+  OffsetTop 0
+  SizeX 150
+  OffsetRight -150
+  SizeY 150
+  OffsetBottom -150
+  Alignment 0.5 1
+  SizeToContent 1
+ }
+ "Z Order" 200
+ {
+  FrameWidgetClass "{651A0075FEEB22D9}" {
+   Name "groupInfoFrame"
+   Slot FrameWidgetSlot "{5E148103CC416CBF}" {
+    Anchor 0 0 0 0
+    OffsetLeft 0
+    OffsetTop 0
+    SizeX 100
+    OffsetRight -100
+    SizeY 30
+    OffsetBottom -30
+    SizeToContent 1
+   }
+   {
+    ImageWidgetClass "{651A0075FEEB22DF}" {
+     Name "Image0"
+     Slot FrameWidgetSlot "{5E16E16F339CB19E}" {
+      Anchor 0 0 1 1
+      PositionX 0
+      OffsetLeft 0
+      PositionY 0
+      OffsetTop 0
+      SizeX -40.201
+      OffsetRight 0
+      SizeY -33
+      OffsetBottom 0
+     }
+     Opacity 0.8
+     Color 0 0 0 1
+    }
+    TextWidgetClass "{651A00755136DD61}" {
+     Name "GroupName"
+     Slot FrameWidgetSlot "{651A00755136DD7F}" {
+      SizeToContent 1
+     }
+     Text "Very long group name"
+     "Font Size" 20
+     "Min Font Size" 20
+     FontProperties FontProperties "{651A0068961F11F7}" {
+      Font "{3E7733BAC8C831F6}UI/Fonts/RobotoCondensed/RobotoCondensed_Regular.fnt"
+     }
+    }
+   }
+  }
+ }
+}

@@ -151,6 +151,10 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 	//! Update marker target, will trigger creation of a marker if within map
 	protected void UpdateMarkerTarget(int playerId)
 	{
+		SCR_AIGroup group = m_GroupsManager.GetPlayerGroup(playerId);
+		if (group && group.IsPlayerLeader(playerId)) // ignore if the player is group leader
+			return;
+		
 		LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
 		if (marker)
 			marker.SetPlayerID(playerId);

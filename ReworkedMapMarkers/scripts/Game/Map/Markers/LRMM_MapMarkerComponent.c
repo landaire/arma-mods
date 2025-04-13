@@ -6,25 +6,12 @@ class LRMM_MapMarkerComponent : SCR_MapMarkerDynamicWComponent
 	protected Widget m_wOwnSquadIcon;
 	protected Widget m_wOwnSquadIconGlow;
 	protected Widget m_wGroupInfo;
-	protected Widget m_wGroupInfoList;
-	protected TextWidget m_wGroupFrequency;
+	protected TextWidget m_wGroupName;
 	
 	protected ref array<Widget> m_aGroupMemberEntries = {};
 	
-	[Attribute("{CCD81F58E9D6EEA6}UI/layouts/Map/MapMarkerGroupInfo.layout", desc: "group info layout")]
-	protected ResourceName m_sGroupInfoLayout;
-	
-	[Attribute("{B09864CA15145CD3}UI/layouts/Map/MapMarkerGroupInfoLine.layout", desc: "group info line layout")]
-	protected ResourceName m_sLineLayout;
-		
-	[Attribute("lineText", desc: "line text widget")]
-	protected string m_sLineTextWidgetName;
-	
-	[Attribute("lineIcon", desc: "line icon widget")]
-	protected string m_sLineIconWidgetName;
-	
-	[Attribute("PlatformIcon")]
-	protected string m_sPlatformIconWidgetName;
+	[Attribute("{4368C6EB6DB2D63A}UI/layouts/Map/LRMM_MapMarkerGroupInfo.layout", desc: "group info layout")]
+	protected ResourceName m_sPlayerInfoLayout;
 	
 	[Attribute("40", desc: "pixels, group info offset")]
 	protected int m_iGroupInfoOffset;
@@ -98,88 +85,23 @@ class LRMM_MapMarkerComponent : SCR_MapMarkerDynamicWComponent
 		{
 			if (!m_bIsInit)
 			{
-				m_wGroupInfo = GetGame().GetWorkspace().CreateWidgets(m_sGroupInfoLayout, m_wRoot.GetParent());
+				m_wGroupInfo = GetGame().GetWorkspace().CreateWidgets(m_sPlayerInfoLayout, m_wRoot.GetParent());
 				if (!m_wGroupInfo)
 					return false;
 				
-				m_wGroupInfoList = m_wGroupInfo.FindAnyWidget("groupInfoList");
-				m_wGroupFrequency = TextWidget.Cast(m_wGroupInfo.FindAnyWidget("groupFrequency"));
+				m_wGroupName = TextWidget.Cast(m_wGroupInfo.FindAnyWidget("GroupName"));
 				
-				int capacity = group.GetMaxMembers();
-				
-				for (int i = 0; i < capacity; i++)
-				{
-					m_aGroupMemberEntries.Insert(GetGame().GetWorkspace().CreateWidgets(m_sLineLayout, m_wGroupInfoList));
+				string groupName = "";
+				string customName = group.GetCustomName();
+				if (customName == string.Empty) {
+					string company, platoon, squad, character, format;
+					group.GetCallsigns(company, platoon, squad, character, format);
+						
+					groupName = WidgetManager.Translate(format, company, platoon, squad, character);
 				}
+				m_wGroupName.SetText(groupName);
 				
 				m_bIsInit = true;
-			}
-			
-			float fFrequency = Math.Round(group.GetRadioFrequency() * 0.1) * 0.01; 	// Format the frequency text: round and convert to 2 digits with one possible decimal place (39500 -> 39.5)			
-			m_wGroupFrequency.SetText(fFrequency.ToString(3, 1));
-			
-			int playerCount = group.GetPlayerCount();
-			array<int> membersCopy = {};
-			membersCopy.Copy(group.GetPlayerIDs());
-			
-			PlayerManager pManager = GetGame().GetPlayerManager();
-			int leaderID = group.GetLeaderID();
-			
-			// leader entry first, order of IDs is not guaranteed
-			foreach (int id : membersCopy)
-			{
-				if (id == leaderID)
-				{
-					Widget entry = m_aGroupMemberEntries[0];
-					TextWidget txtW = TextWidget.Cast(entry.FindWidget(m_sLineTextWidgetName));
-					txtW.SetText(SCR_PlayerNamesFilterCache.GetInstance().GetPlayerDisplayName(id));
-					entry.SetVisible(true);
-					
-					ImageWidget platformImage= ImageWidget.Cast(entry.FindAnyWidget(m_sPlatformIconWidgetName));
-					if (platformImage)
-						SCR_PlayerController.Cast(GetGame().GetPlayerController()).SetPlatformImageTo(id, platformImage);
-					
-					if (GetGame().GetPlayerController().GetPlayerId() == id)
-						txtW.SetColor(GUIColors.ORANGE);
-					else 
-						txtW.SetColor(GUIColors.DEFAULT);
-					
-					ImageWidget imgW = ImageWidget.Cast(entry.FindWidget(m_sLineIconWidgetName));
-					imgW.SetOpacity(1);
-					
-					membersCopy.RemoveItem(id);
-					break;	
-				}
-			}
-			
-			// members
-			foreach (int i, Widget entry :  m_aGroupMemberEntries) 
-			{
-				if (i == 0)		// leader
-					continue;
-				
-				if (i < playerCount)
-				{
-					TextWidget txtW = TextWidget.Cast(entry.FindWidget(m_sLineTextWidgetName));
-					txtW.SetText(SCR_PlayerNamesFilterCache.GetInstance().GetPlayerDisplayName(membersCopy[i-1]));
-					entry.SetVisible(true);
-					
-					ImageWidget platformImage= ImageWidget.Cast(entry.FindAnyWidget(m_sPlatformIconWidgetName));
-					if (platformImage)
-						SCR_PlayerController.Cast(GetGame().GetPlayerController()).SetPlatformImageTo(membersCopy[i-1], platformImage);
-					
-					if (GetGame().GetPlayerController().GetPlayerId() == membersCopy[i-1])
-						txtW.SetColor(GUIColors.ORANGE);
-					else 
-						txtW.SetColor(GUIColors.DEFAULT);
-					
-					ImageWidget imgW = ImageWidget.Cast(entry.FindWidget(m_sLineIconWidgetName));
-					imgW.SetOpacity(0);
-					
-					continue;
-				} 
-				
-				entry.SetVisible(false);
 			}
 			
 			m_wGroupInfo.SetVisible(true);

@@ -28,7 +28,7 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			return;
 		
 		if (m_PlayerID == pController.GetPlayerId())	// if this is us, dont display
-			SetLocalVisible(true); // set this true for markers testing
+			SetLocalVisible(false); // set this true for markers testing
 		else
 		{
 			SetLocalVisible(true);
@@ -140,16 +140,7 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			return;
 		}
 		
-		string customName = m_Group.GetCustomName();
-		if (customName != string.Empty)
-			SetText(customName);
-		else 
-		{
-			string company, platoon, squad, character, format;
-			m_Group.GetCallsigns(company, platoon, squad, character, format);
-				
-			SetText(WidgetManager.Translate(format, company, platoon, squad, character));
-		}
+		SetText(SCR_PlayerNamesFilterCache.GetInstance().GetPlayerDisplayName(m_PlayerID));
 		
 		if (m_SquadLeaderWidgetComp)
 			m_SquadLeaderWidgetComp.SetText(m_sText);
@@ -258,20 +249,60 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		m_fUpdateDelay = SL_UPDATE_DELAY;
 	}
 	
+	override protected void EOnFrame(IEntity owner, float timeSlice) {
+		vector oldPosition = GetWorldPos();
+		
+		super.EOnFrame(owner, timeSlice);
+		
+		if ( oldPosition != GetWorldPos()) {
+			OnUpdatePosition();		
+		}
+	}
+	
 	override protected void OnUpdatePosition() {
-//		SCR_PlayerController playerController =  SCR_PlayerController.Cast(GetGame().GetPlayerController());
-//		if (!playerController) {
-//			SetLocalVisible(false);
-//			return;
-//		}
-//		
-//		vector myPosition = playerController.GetOrigin();
-//		
-//		if (vector.DistanceSqXZ(m_vPos, myPosition) > 100 * 100)  {
-//			SetLocalVisible(false);
-//		} else {
-//			SetLocalVisible(true);
-//		}
+		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		
+		if (!playerController) {
+			SetLocalVisible(false);
+			return;
+		}
+		
+		if (m_PlayerID == playerController.GetPlayerId()) {
+			// Do not show ourselves on the minimap
+			SetLocalVisible(false);
+			return;
+		}
+		
+		IEntity controlledEntity = playerController.GetControlledEntity();
+		if (!controlledEntity) {
+			SetLocalVisible(false);
+			return;
+		}
+		
+		vector myPosition = controlledEntity.GetOrigin();
+		float distanceFromMyPos = vector.DistanceSqXZ(m_vPos, myPosition);
+		
+		int DISTANCE_DROPOFF_SQ = 100 * 100;
+		float opacity = distanceFromMyPos / DISTANCE_DROPOFF_SQ;
+		
+		if (m_wRoot) {
+			m_wRoot.SetOpacity(1 - opacity);
+		}
+
+		if (distanceFromMyPos > DISTANCE_DROPOFF_SQ)  {
+			SetLocalVisible(false);
+		} else {
+			SetLocalVisible(true);
+		}
+	}
+	
+	override void SetLocalVisible(bool state) {
+		if (m_bIsLocalVisible == state) {
+			// nothing to do
+			return;
+		}
+		m_bIsLocalVisible = state;
+		OnUpdateVisibility();
 	}
 	
 	//------------------------------------------------------------------------------------------------
