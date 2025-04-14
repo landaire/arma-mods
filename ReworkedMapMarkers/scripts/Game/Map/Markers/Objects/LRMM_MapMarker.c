@@ -23,21 +23,68 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 	//------------------------------------------------------------------------------------------------
 	void OnPlayerIdUpdate()
 	{
-		PlayerController pController = GetGame().GetPlayerController();
-		if (!pController)
-			return;
 		
-		if (m_PlayerID == pController.GetPlayerId())	// if this is us, dont display
-			SetLocalVisible(false); // set this true for markers testing
-		else
+	}
+	
+	bool ShouldBeVisible(bool isMaster) {
+		PlayerController pController = null;
+		
+		if (isMaster) {
+			pController = GetGame().GetPlayerManager().GetPlayerController(m_PlayerID)
+		} else {
+			pController = GetGame().GetPlayerController();
+		}
+		
+		if (!pController)
+			return false;
+		
+		
+		// Check if the player is dead to override the above
+		IEntity ent = pController.GetControlledEntity();
+		if (ent)
 		{
-			SetLocalVisible(true);
+			SCR_CharacterControllerComponent charController = SCR_CharacterControllerComponent.Cast(ent.FindComponent(SCR_CharacterControllerComponent));
+			if (charController.IsDead())
+			{
+				return false;			
+			}
+		}
+		
+		// Never display for group leaders
+		if (m_Group && m_Group.IsPlayerLeader(m_PlayerID)) {
+			return false;
+		}
+		
+		// if this is us, dont display
+		if (!isMaster && m_PlayerID == pController.GetPlayerId())
+			// set this true for markers testing
+			return false;
+		
+		// All conditions passed, this should be visible.
+		return true;
+	}
+	
+	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
+	void RpcDo_ReassertVisibility(bool isMaster) {
+		bool result = ShouldBeVisible(isMaster);
+		if (isMaster) {
+			PrintFormat("Setting global map marker to %1", result);
+			SetGlobalVisible(result);
+		} else {
+			PrintFormat("Setting local map marker to %1", result);
+			SetLocalVisible(result);
 		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	// API SERVER
 	//------------------------------------------------------------------------------------------------
+	void ReassertVisibility() {
+		RpcDo_ReassertVisibility(true);
+		Rpc(RpcDo_ReassertVisibility, false);
+	}
+	
+	
 	void SetPlayerID(int id)
 	{
 		m_PlayerID = id;
@@ -47,8 +94,6 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		
 		if (!System.IsConsoleApp())
 			OnPlayerIdUpdate();
-		
-		UpdateTarget();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -65,39 +110,19 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		return m_Group;
 	}
 	
+	void SetGroup(SCR_AIGroup group) {
+		m_Group = group;
+	}
+	
 	//------------------------------------------------------------------------------------------------
 	protected void AssignGroup()
 	{
+		// TODO: marker registration should not be depenent on a group assignment
 		SCR_GroupsManagerComponent comp = SCR_GroupsManagerComponent.GetInstance();
 		if (!comp)
 			return;
 		
 		m_Group = comp.GetPlayerGroup(m_PlayerID);
-		
-		if (m_Group)
-			LRMM_MapMarkerEntry.Cast(m_ConfigEntry).RegisterMarker(this, m_PlayerID);
-	}
-	
-	//------------------------------------------------------------------------------------------------
-	//! Target tracking based on playerID 
-	//! Authority only
-	protected void UpdateTarget()
-	{
-		IEntity ent = GetGame().GetPlayerManager().GetPlayerControlledEntity(m_PlayerID);
-		if (ent)
-		{
-			SCR_CharacterControllerComponent charController = SCR_CharacterControllerComponent.Cast(ent.FindComponent(SCR_CharacterControllerComponent));
-			if (!charController.IsDead())
-			{
-				SetTarget(ent);
-				SetGlobalVisible(true);
-								
-				return;
-			}
-		}
-		
-		SetTarget(null);
-		SetGlobalVisible(false);
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -155,10 +180,10 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		if (!m_wRoot)
 			return;
 		
-		if (m_Group.IsPlayerInGroup(GetGame().GetPlayerController().GetPlayerId()))
-			m_SquadLeaderWidgetComp.SetGroupActive(true, m_Group.GetFactionName());
-		else
-			m_SquadLeaderWidgetComp.SetGroupActive(false);
+//		if (m_Group.IsPlayerInGroup(GetGame().GetPlayerController().GetPlayerId()))
+//			m_SquadLeaderWidgetComp.SetGroupActive(true, m_Group.GetFactionName());
+//		else
+//			m_SquadLeaderWidgetComp.SetGroupActive(false);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -254,12 +279,18 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		
 		super.EOnFrame(owner, timeSlice);
 		
-		if ( oldPosition != GetWorldPos()) {
+		if (oldPosition != GetWorldPos()) {
 			OnUpdatePosition();		
 		}
 	}
 	
 	override protected void OnUpdatePosition() {
+		super.OnUpdatePosition();
+		
+		RefreshPositionCondition();
+	}
+	
+	void RefreshPositionCondition() {
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());
 		
 		if (!playerController) {
@@ -267,8 +298,8 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			return;
 		}
 		
-		if (m_PlayerID == playerController.GetPlayerId()) {
-			// Do not show ourselves on the minimap
+		if (!ShouldBeVisible(false)) {
+			// Do not show ourselves on the minimap after movement
 			SetLocalVisible(false);
 			return;
 		}
@@ -293,6 +324,15 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			SetLocalVisible(false);
 		} else {
 			SetLocalVisible(true);
+		}
+	}
+	
+	override protected void OnUpdateVisibility() {
+		super.OnUpdateVisibility();
+		
+		if (!IsVisible() && m_SquadLeaderWidgetComp) {
+			// Hide the extended info
+			m_SquadLeaderWidgetComp.SetVisible(false);
 		}
 	}
 	

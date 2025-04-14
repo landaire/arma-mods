@@ -8,8 +8,6 @@ class LRMM_MapMarkerComponent : SCR_MapMarkerDynamicWComponent
 	protected Widget m_wGroupInfo;
 	protected TextWidget m_wGroupName;
 	
-	protected ref array<Widget> m_aGroupMemberEntries = {};
-	
 	[Attribute("{4368C6EB6DB2D63A}UI/layouts/Map/LRMM_MapMarkerGroupInfo.layout", desc: "group info layout")]
 	protected ResourceName m_sPlayerInfoLayout;
 	
@@ -121,6 +119,11 @@ class LRMM_MapMarkerComponent : SCR_MapMarkerDynamicWComponent
 		m_MarkerEnt.LayerChangeLogic(m_iLayerID);
 		
 		return true;
+	}
+	
+	void SetVisible(bool visible) {
+		m_wGroupInfo.SetVisible(false);
+		m_MarkerEnt.LayerChangeLogic(m_iLayerID);
 	}
 	
 	//------------------------------------------------------------------------------------------------

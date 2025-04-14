@@ -38,34 +38,33 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 	//------------------------------------------------------------------------------------------------
 	//! SCR_GroupsManagerComponent event
 	protected void OnPlayableGroupCreated(SCR_AIGroup group)
-	{		
-//		LRMM_MapMarker marker = LRMM_MapMarker.Cast(m_MarkerMgr.InsertDynamicMarker(SCR_EMapMarkerType.LRMM_TEAM_MARKER, group));
-//		if (!marker)
-//			return;
-//		
-//		marker.SetFaction(group.GetFaction());
-//		RegisterMarker(marker, group);
+	{
+		// Same functionality -- need to trigger an update of the
+		// player's group info text
+		OnGroupCustomNameChanged(group);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_GroupsManagerComponent event
 	protected void OnPlayableGroupRemoved(SCR_AIGroup group)
 	{
-//		LRMM_MapMarker marker = m_mPlayerMarkers.Get(group);
-//		if (marker)
-//			m_MarkerMgr.RemoveDynamicMarker(marker);
-//		
-//		UnregisterMarker(group);
+
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_AIGroup event
 	protected void OnPlayerLeaderChanged(int groupID, int playerId)
-	{			
-//		SCR_AIGroup group = m_GroupsManager.FindGroup(groupID);
-//		LRMM_MapMarker marker = m_mPlayerMarkers.Get(group);
-//		if (marker)
-//			marker.SetPlayerID(playerId);
+	{	
+		SCR_AIGroup group = null;
+		if (m_GroupsManager) {
+			group = m_GroupsManager.FindGroup(groupID);
+		}
+		
+		if (playerId < 0) {
+			playerId = group.GetLeaderID();
+		}
+		
+		TryCreateOrUpdateMarker(group, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -76,89 +75,151 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 		if (!playerController)
 			return;
 		
-		if (group.IsPlayerInGroup(playerController.GetPlayerId() == playerId))
-		{
+		if (group.IsPlayerInGroup(playerId) && playerController.GetPlayerId() == playerId) {
 			m_bCurrentSquad = group;
-			UpdateToolEntryState();
-			
-			LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
-			if (marker)
-				marker.UpdatePlayerAffiliation();
 		}
 		
-		// Create a marker for this individual
-		LRMM_MapMarker marker = LRMM_MapMarker.Cast(m_MarkerMgr.InsertDynamicMarker(SCR_EMapMarkerType.LRMM_TEAM_MARKER, group));
-		if (!marker)
-			return;
-		
-		marker.SetFaction(group.GetFaction());
-		RegisterMarker(marker, playerId);
+		TryCreateOrUpdateMarker(group, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_AIGroup event
 	protected void OnPlayerRemoved(SCR_AIGroup group, int playerId)
-	{			
-		PlayerController playerController = GetGame().GetPlayerController();
+	{	PlayerController playerController = GetGame().GetPlayerController();
 		if (!playerController)
 			return;
 		
-		if (m_bCurrentSquad == group && group.IsPlayerInGroup(playerController.GetPlayerId() == playerId))
-		{
-			m_bCurrentSquad = null;
-			UpdateToolEntryState();
-			
-			LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
-			if (marker)
-				marker.UpdatePlayerAffiliation();
+		if (playerId < 0) {
+			return;		
 		}
 		
-		UnregisterMarker(playerId);
+		if (m_bCurrentSquad == group && group.IsPlayerInGroup(playerId) && playerController.GetPlayerId() == playerId) {
+			m_bCurrentSquad = null;
+		}
+		TryCreateOrUpdateMarker(group, playerId);
+	}
+	
+	void TryCreateOrUpdateMarker(SCR_AIGroup group, int playerId) {
+		Faction playerFaction = null;
+		LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
+		bool markerCreated = false;
+		
+		// Check if we don't have a player marker
+		if (!marker) {
+			if (group  == null && m_GroupsManager) {
+				// We need to look up their group info
+				group = m_GroupsManager.GetPlayerGroup(playerId);		
+			}
+			
+			SCR_PlayerController player = SCR_PlayerController.Cast(GetGame().GetPlayerManager().GetPlayerController(playerId));
+			if (!player) {
+				// No player means we're in a weird state where we shouldn't be showing the marker
+				return;
+			}
+			
+			SCR_FactionManager factionManager = SCR_FactionManager.Cast(GetGame().GetFactionManager());
+			if (factionManager) {
+				playerFaction = factionManager.GetPlayerFaction(playerId);
+			}
+			
+			// Create a marker for this individual
+			marker = LRMM_MapMarker.Cast(m_MarkerMgr.InsertDynamicMarker(SCR_EMapMarkerType.LRMM_TEAM_MARKER, player));
+			if (!marker)
+				return;
+			
+			markerCreated = true;
+		}
+		
+		if (markerCreated) {
+			marker.SetPlayerID(playerId);
+		}
+
+		marker.SetFaction(playerFaction);
+		marker.SetGroup(group);
+		marker.ReassertVisibility();
+		
+		if (markerCreated) {
+			RegisterMarker(marker, playerId);		
+		}	
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_BaseGameMode event
 	protected void OnPlayerSpawned(int playerId, IEntity player)
 	{
-		UpdateMarkerTarget(playerId);
+		TryCreateOrUpdateMarker(null, playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_BaseGameMode event
-	protected void OnPlayerKilled( notnull SCR_InstigatorContextData instigatorContextData)
+	protected void OnPlayerKilledServer( notnull SCR_InstigatorContextData instigatorContextData)
 	{
-		UpdateMarkerTarget(instigatorContextData.GetVictimPlayerID());
+		TryCreateOrUpdateMarker(null, instigatorContextData.GetVictimPlayerID());
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! SCR_BaseGameMode event
+	protected void OnPlayerKilledClient( notnull SCR_InstigatorContextData instigatorContextData)
+	{
+		SCR_PlayerController myPlayer = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		
+		if (instigatorContextData.GetVictimPlayerID() != myPlayer.GetPlayerId())  {
+			return;		
+		}
+		
+		array<int> playerIds = {};
+		GetGame().GetPlayerManager().GetPlayers(playerIds);
+		// Hide all markers
+		for (int i = 0; i < playerIds.Count(); i++) {
+			LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerIds[i]);
+			if (marker)
+				marker.SetLocalVisible(false);
+		}
+	}
+	
+	//------------------------------------------------------------------------------------------------
+	//! SCR_BaseGameMode event
+	protected void OnPlayerSpawnedClient( int playerId, IEntity playerEntity)
+	{
+		SCR_PlayerController myPlayer = SCR_PlayerController.Cast(GetGame().GetPlayerController());
+		
+		if (playerId != myPlayer.GetPlayerId())  {
+			LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
+			if (marker) {
+				marker.RefreshPositionCondition();
+			}
+			return;		
+		}
+
+		for (int i = 0; i < m_mPlayerMarkers.Count(); i++) {
+			int key = m_mPlayerMarkers.GetKey(i);
+			LRMM_MapMarker marker = m_mPlayerMarkers.Get(key);
+			if (marker) {
+				marker.RefreshPositionCondition();
+			}
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_BaseGameMode event
 	protected void OnPlayerDeleted(int playerId, IEntity player)
-	{		
-		UpdateMarkerTarget(playerId);
+	{	LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
+		if (marker)
+			marker.SetGlobalVisible(false);
+		UnregisterMarker(playerId);
 	}
 	
 	//------------------------------------------------------------------------------------------------
 	//! SCR_AIGroup event
 	protected void OnGroupCustomNameChanged(SCR_AIGroup group)
 	{
-		// TODO: change this so it changes the specific group text
-//		LRMM_MapMarker marker = m_mPlayerMarkers.Get(group);
-//		if (marker)
-//			marker.SetTextUpdate();
+		array<int> groupMembers = group.GetPlayerIDs();
+		for (int i = 0; i < groupMembers.Count(); i++) {
+			LRMM_MapMarker marker = m_mPlayerMarkers.Get(groupMembers[i]);
+			if (marker)
+				marker.SetTextUpdate();
+		}
 	}
-	
-	//------------------------------------------------------------------------------------------------
-	//! Update marker target, will trigger creation of a marker if within map
-	protected void UpdateMarkerTarget(int playerId)
-	{
-		SCR_AIGroup group = m_GroupsManager.GetPlayerGroup(playerId);
-		if (group && group.IsPlayerLeader(playerId)) // ignore if the player is group leader
-			return;
-		
-		LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
-		if (marker)
-			marker.SetPlayerID(playerId);
-	} 
 	
 	//------------------------------------------------------------------------------------------------
 	override SCR_EMapMarkerType GetMarkerType()
@@ -182,7 +243,7 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 		SCR_AIGroup.GetOnPlayerLeaderChanged().Insert(OnPlayerLeaderChanged);
 		
 		gameMode.GetOnPlayerSpawned().Insert(OnPlayerSpawned);
-		gameMode.GetOnPlayerKilled().Insert(OnPlayerKilled);
+		gameMode.GetOnPlayerKilled().Insert(OnPlayerKilledServer);
 		gameMode.GetOnPlayerDeleted().Insert(OnPlayerDeleted);
 	}
 	
@@ -192,6 +253,15 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 		SCR_AIGroup.GetOnCustomNameChanged().Insert(OnGroupCustomNameChanged);
 		SCR_AIGroup.GetOnPlayerAdded().Insert(OnPlayerAdded);
 		SCR_AIGroup.GetOnPlayerRemoved().Insert(OnPlayerRemoved);
+		
+		SCR_BaseGameMode gameMode = SCR_BaseGameMode.Cast(GetGame().GetGameMode());
+		if (!gameMode)
+			return;
+
+		// When the player dies, they should not see any markers anymore.
+		// Whent they spawn, we need to update nearby markers
+		gameMode.GetOnPlayerKilled().Insert(OnPlayerKilledClient);
+		gameMode.GetOnPlayerSpawned().Insert(OnPlayerSpawnedClient)
 	}
 		
 	//------------------------------------------------------------------------------------------------

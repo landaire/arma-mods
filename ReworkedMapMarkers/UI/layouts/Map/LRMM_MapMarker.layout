@@ -18,6 +18,7 @@ FrameWidgetClass {
  components {
   LRMM_MapMarkerComponent "{65197BDE7B9E85B8}" {
    m_sPlayerInfoLayout "{4368C6EB6DB2D63A}UI/layouts/Map/LRMM_MapMarkerGroupInfo.layout"
+   m_iGroupInfoOffset 60
   }
  }
  {
