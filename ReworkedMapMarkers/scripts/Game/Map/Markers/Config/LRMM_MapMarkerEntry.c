@@ -130,6 +130,9 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 			markerCreated = true;
 		}
 		
+		IEntity ent = GetGame().GetPlayerManager().GetPlayerControlledEntity(playerId);
+		marker.SetTarget(ent);
+		
 		if (markerCreated) {
 			marker.SetPlayerID(playerId);
 		}
@@ -172,8 +175,10 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 		// Hide all markers
 		for (int i = 0; i < playerIds.Count(); i++) {
 			LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerIds[i]);
-			if (marker)
+			if (marker) {
+				marker.SetTarget(null);
 				marker.SetLocalVisible(false);
+			}
 		}
 	}
 	
@@ -204,8 +209,11 @@ class LRMM_MapMarkerEntry: SCR_MapMarkerEntryDynamic
 	//! SCR_BaseGameMode event
 	protected void OnPlayerDeleted(int playerId, IEntity player)
 	{	LRMM_MapMarker marker = m_mPlayerMarkers.Get(playerId);
-		if (marker)
+		if (marker) {
+			marker.SetTarget(null);
 			marker.SetGlobalVisible(false);
+		}
+		
 		UnregisterMarker(playerId);
 	}
 	

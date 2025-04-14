@@ -122,7 +122,10 @@ class LRMM_MapMarkerComponent : SCR_MapMarkerDynamicWComponent
 	}
 	
 	void SetVisible(bool visible) {
-		m_wGroupInfo.SetVisible(false);
+		if (m_wGroupInfo) {
+			m_wGroupInfo.SetVisible(false);
+		}
+		
 		m_MarkerEnt.LayerChangeLogic(m_iLayerID);
 	}
 	

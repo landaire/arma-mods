@@ -23,7 +23,7 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 	//------------------------------------------------------------------------------------------------
 	void OnPlayerIdUpdate()
 	{
-		
+		PrintFormat("OnPlayerIdUpdate called for %1", m_PlayerID);
 	}
 	
 	bool ShouldBeVisible(bool isMaster) {
@@ -35,8 +35,9 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			pController = GetGame().GetPlayerController();
 		}
 		
-		if (!pController)
-			return false;
+		if (!pController) {
+			return false;		
+		}
 		
 		
 		// Check if the player is dead to override the above
@@ -56,9 +57,10 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		}
 		
 		// if this is us, dont display
-		if (!isMaster && m_PlayerID == pController.GetPlayerId())
+		if (!isMaster && m_PlayerID == pController.GetPlayerId()) {
 			// set this true for markers testing
 			return false;
+		}
 		
 		// All conditions passed, this should be visible.
 		return true;
@@ -68,10 +70,8 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 	void RpcDo_ReassertVisibility(bool isMaster) {
 		bool result = ShouldBeVisible(isMaster);
 		if (isMaster) {
-			PrintFormat("Setting global map marker to %1", result);
 			SetGlobalVisible(result);
 		} else {
-			PrintFormat("Setting local map marker to %1", result);
 			SetLocalVisible(result);
 		}
 	}
@@ -94,6 +94,9 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		
 		if (!System.IsConsoleApp())
 			OnPlayerIdUpdate();
+		
+		// Try to assign a group. When a player loads in a group isn't necessarily assigned yet.
+		AssignGroup();
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -112,6 +115,8 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 	
 	void SetGroup(SCR_AIGroup group) {
 		m_Group = group;
+		m_bDoGroupSymbolUpdate = true;
+		m_bDoGroupTextUpdate = true;
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -122,7 +127,7 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		if (!comp)
 			return;
 		
-		m_Group = comp.GetPlayerGroup(m_PlayerID);
+		SetGroup(comp.GetPlayerGroup(m_PlayerID));
 	}
 		
 	//------------------------------------------------------------------------------------------------
@@ -222,12 +227,17 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 			if (ent)
 				SetTarget(ent);
 		}
-		
+				
 		Faction markerFaction = SCR_FactionManager.SGetPlayerFaction(m_PlayerID);	
 		Faction localFaction = SCR_FactionManager.SGetLocalPlayerFaction();	
 		if (!localFaction || localFaction.IsFactionEnemy(markerFaction))	// markers could still get streamed in rare cases due to distance based streaming, in which case we check for faction and dont display
-			return;	
-			
+		{
+			return;
+		}
+		
+		AssignGroup();
+		RpcDo_ReassertVisibility(false);
+					
 		super.OnCreateMarker();
 		
 		m_bDoGroupSymbolUpdate = true;
@@ -237,6 +247,10 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 		
 		GetGame().OnUserSettingsChangedInvoker().Insert(OnUserSettingsChanged);
 		SCR_AIGroup.GetOnFlagSelected().Insert(OnFlagSelected);
+		
+		if (m_ConfigEntry) {
+			LRMM_MapMarkerEntry.Cast(m_ConfigEntry).RegisterMarker(this, m_PlayerID);
+		}
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -291,6 +305,7 @@ class LRMM_MapMarker : SCR_MapMarkerEntity
 	}
 	
 	void RefreshPositionCondition() {
+				
 		SCR_PlayerController playerController = SCR_PlayerController.Cast(GetGame().GetPlayerController());
 		
 		if (!playerController) {
