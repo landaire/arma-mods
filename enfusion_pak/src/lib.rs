@@ -6,6 +6,7 @@ use std::rc::{self, Rc};
 use std::{panic::PanicHookInfo, path::Path};
 
 use error::PakError;
+use jiff::civil::DateTime;
 use kinded::{Kind, Kinded};
 use variantly::Variantly;
 use winnow::binary::{be_u32, le_u32, u8};
@@ -29,6 +30,31 @@ impl<'input> FileEntry<'input> {
 
     pub fn kind(&self) -> FileEntryKind {
         self.meta.kind()
+    }
+
+    pub fn timestamp(&self) -> Option<jiff::civil::DateTime> {
+        match self.meta {
+            FileEntryMeta::Folder { .. } => None,
+            FileEntryMeta::File { timestamp, .. } => {
+                let year = (timestamp >> 26) + 2000;
+                let month = (timestamp >> 22) & 0xf;
+                let day = (timestamp >> 17) & 0x1f;
+                let hour = (timestamp >> 12) & 0x1f;
+                let minute = (timestamp >> 6) & 0x3f;
+                let second = timestamp & 0x3f;
+
+                DateTime::new(
+                    year as i16,
+                    month as i8,
+                    day as i8,
+                    hour as i8,
+                    minute as i8,
+                    second as i8,
+                    0,
+                )
+                .ok()
+            }
+        }
     }
 }
 
@@ -271,6 +297,7 @@ fn parse_file_chunk<'input>(input: &mut &'input [u8]) -> WResult<Chunk<'input>> 
                     .checked_sub(1)
                     .expect("encountered more children than expected for a folder");
 
+                println!("{:?}", entry.timestamp());
                 parent.entry.meta.push_child(entry);
             }
         }
