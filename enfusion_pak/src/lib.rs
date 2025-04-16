@@ -1,10 +1,13 @@
 use std::borrow::Cow;
+use std::cell::RefCell;
 use std::collections::{HashMap, VecDeque};
 use std::path::PathBuf;
+use std::rc::{self, Rc};
 use std::{panic::PanicHookInfo, path::Path};
 
 use error::PakError;
 use kinded::{Kind, Kinded};
+use variantly::Variantly;
 use winnow::binary::{be_u32, le_u32, u8};
 use winnow::combinator::alt;
 use winnow::error::ContextError;
@@ -14,28 +17,71 @@ use winnow::{Parser, Result as WResult};
 mod error;
 
 #[derive(Debug)]
+struct FileEntry<'input> {
+    name: Cow<'input, str>,
+    meta: FileEntryMeta<'input>,
+}
+
+impl<'input> FileEntry<'input> {
+    pub fn name(&self) -> &str {
+        self.name.as_ref()
+    }
+
+    pub fn kind(&self) -> FileEntryKind {
+        self.meta.kind()
+    }
+}
+
+#[derive(Debug, Kinded, Variantly)]
+#[kinded(kind = FileEntryKind)]
+enum FileEntryMeta<'input> {
+    Folder {
+        children: HashMap<String, FileEntry<'input>>,
+    },
+    File {
+        offset: u32,
+        compressed_len: u32,
+        decompressed_len: u32,
+        compression_type: u32,
+        unknown: u32,
+        timestamp: u32,
+    },
+}
+
+impl<'input> FileEntryMeta<'input> {
+    /// Adds a child to this file entry. No-op if this is a folder
+    pub fn push_child(&mut self, child: FileEntry<'input>) {
+        if let FileEntryMeta::Folder { children } = self {
+            children.insert(child.name().to_owned(), child);
+        }
+    }
+}
+
+impl TryFrom<u8> for FileEntryKind {
+    type Error = ();
+
+    fn try_from(value: u8) -> Result<Self, Self::Error> {
+        let result = match value {
+            0 => Self::Folder,
+            1 => Self::File,
+            _ => {
+                panic!("unknown file entry kind: {:#X}", value);
+            }
+        };
+
+        Ok(result)
+    }
+}
+
+#[derive(Debug)]
 pub struct PakFile {}
 
 #[derive(Debug)]
 enum PakType {
-    PAK1,
+    PAC1,
 }
 
-#[derive(Debug)]
-struct FileEntry<'input> {
-    kind: FileEntryKind,
-    expected_children_count: usize,
-    name: Cow<'input, str>,
-    children: Vec<FileEntry<'input>>,
-    offset: u32,
-    compressed_len: u32,
-    decompressed_len: u32,
-    compression_type: u32,
-    unknown: u32,
-    timestamp: u32,
-}
-
-#[derive(Debug, Kinded)]
+#[derive(Debug, Kinded, Variantly)]
 enum Chunk<'input> {
     Pac1(u32),
     Form {
@@ -50,7 +96,7 @@ enum Chunk<'input> {
         data: &'input [u8],
     },
     File {
-        entries: Vec<FileEntry<'input>>,
+        fs: FileEntry<'input>,
     },
     Unknown(u32),
 }
@@ -93,7 +139,7 @@ fn parse_form_chunk<'input>(input: &mut &'input [u8]) -> WResult<Chunk<'input>> 
         .try_into()
         .expect("winnow should have returned a 4-byte buffer");
     let pak_file_type = match &pak_type_bytes {
-        b"PAC1" => PakType::PAK1,
+        b"PAC1" => PakType::PAC1,
         unk => {
             panic!("unknown pak type: {:?}", unk);
         }
@@ -129,66 +175,28 @@ fn parse_data_chunk<'input>(input: &mut &'input [u8]) -> WResult<Chunk<'input>> 
     Ok(chunk)
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-enum FileEntryKind {
-    Folder,
-    File,
-}
-
-impl TryFrom<u8> for FileEntryKind {
-    type Error = ();
-
-    fn try_from(value: u8) -> Result<Self, Self::Error> {
-        let result = match value {
-            0 => Self::Folder,
-            1 => Self::File,
-            _ => {
-                panic!("unknown file entry kind: {:#X}", value);
-            }
-        };
-
-        Ok(result)
-    }
-}
-
-fn parse_file_entry<'input>(input: &mut &'input [u8]) -> WResult<FileEntry<'input>> {
+fn parse_file_entry<'input>(input: &mut &'input [u8]) -> WResult<(FileEntry<'input>, usize)> {
     let entry_kind: FileEntryKind = u8(input)?.try_into().expect("???");
     let name_len = u8(input)?;
     let name_bytes = take(name_len).parse_next(input)?;
     // TODO: use proper error type
     let name = str::from_utf8(name_bytes).expect("invalid utf8 filename");
 
-    match entry_kind {
+    let mut is_root = false;
+    let (meta, children) = match entry_kind {
         FileEntryKind::Folder => {
             let children_count = le_u32(input)?;
-            if name_len == 0 {
-                // Special case for root directory
-                return Ok(FileEntry {
-                    kind: FileEntryKind::Folder,
-                    name: Cow::Owned("Root".to_string()),
-                    expected_children_count: children_count as usize,
-                    children: vec![],
-                    offset: 0,
-                    compressed_len: 0,
-                    decompressed_len: 0,
-                    compression_type: 0,
-                    unknown: 0,
-                    timestamp: 0,
-                });
+            // Special case for root directory
+            if name.is_empty() {
+                is_root = true;
             }
 
-            return Ok(FileEntry {
-                kind: entry_kind,
-                name: Cow::Borrowed(name),
-                expected_children_count: children_count as usize,
-                children: vec![],
-                offset: 0,
-                compressed_len: 0,
-                decompressed_len: 0,
-                compression_type: 0,
-                unknown: 0,
-                timestamp: 0,
-            });
+            (
+                FileEntryMeta::Folder {
+                    children: Default::default(),
+                },
+                children_count as usize,
+            )
         }
         FileEntryKind::File => {
             let offset = le_u32(input)?;
@@ -203,20 +211,27 @@ fn parse_file_entry<'input>(input: &mut &'input [u8]) -> WResult<FileEntry<'inpu
             }
             assert_eq!(unknown, 0);
 
-            return Ok(FileEntry {
-                kind: entry_kind,
-                name: Cow::Borrowed(name),
-                expected_children_count: 0,
-                children: vec![],
-                offset,
-                compressed_len,
-                decompressed_len,
-                compression_type,
-                unknown,
-                timestamp,
-            });
+            (
+                FileEntryMeta::File {
+                    offset,
+                    compressed_len,
+                    decompressed_len,
+                    compression_type,
+                    unknown,
+                    timestamp,
+                },
+                0,
+            )
         }
-    }
+    };
+
+    let name = if is_root {
+        Cow::Owned("Root".to_string())
+    } else {
+        Cow::Borrowed(name)
+    };
+
+    Ok((FileEntry { name, meta }, children))
 }
 
 fn parse_file_chunk<'input>(input: &mut &'input [u8]) -> WResult<Chunk<'input>> {
@@ -227,14 +242,61 @@ fn parse_file_chunk<'input>(input: &mut &'input [u8]) -> WResult<Chunk<'input>> 
     let mut chunk_data = take(chunk_len).parse_next(input)?;
     dbg!(chunk_data.len());
 
-    let mut entries = Vec::new();
-
-    while !chunk_data.is_empty() {
-        let entry = parse_file_entry(&mut chunk_data)?;
-        entries.push(entry);
+    struct Directory<'input> {
+        is_root: bool,
+        children_remaining: usize,
+        entry: FileEntry<'input>,
     }
 
-    let chunk = Chunk::File { entries };
+    let mut parents = vec![];
+    let mut parsed_root = false;
+
+    while !chunk_data.is_empty() {
+        let (entry, children) = parse_file_entry(&mut chunk_data)?;
+
+        match entry.meta.kind() {
+            FileEntryKind::Folder => {
+                parents.push(Directory {
+                    is_root: !parsed_root,
+                    children_remaining: children,
+                    entry,
+                });
+
+                parsed_root = true;
+            }
+            FileEntryKind::File => {
+                let parent = parents.last_mut().expect("bug: no parent for this file");
+                parent.children_remaining = parent
+                    .children_remaining
+                    .checked_sub(1)
+                    .expect("encountered more children than expected for a folder");
+
+                parent.entry.meta.push_child(entry);
+            }
+        }
+
+        // Check to see if the parents can be coalesced
+        while let Some(dir) =
+            parents.pop_if(|parent| parent.children_remaining == 0 && !parent.is_root)
+        {
+            let parent = parents
+                .last_mut()
+                .expect("expected a folder to have a parent, but there is none");
+
+            parent.children_remaining = parent
+                .children_remaining
+                .checked_sub(1)
+                .expect("encountered more children than expected for a folder");
+
+            parent.entry.meta.push_child(dir.entry);
+        }
+    }
+
+    assert_eq!(parents.len(), 1);
+
+    let chunk = Chunk::File {
+        fs: parents.pop().expect("no parents?").entry,
+    };
 
     Ok(chunk)
 }
