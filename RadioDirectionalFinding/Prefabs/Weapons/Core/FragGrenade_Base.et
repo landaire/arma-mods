@@ -1,0 +1,14 @@
+GenericEntity : "{D7EB24176E5CEAA6}Prefabs/Weapons/Core/Grenade_Base.et" {
+ ID "1F80A73AAE197BBE"
+ components {
+  AICombatPropertiesComponent "{651E630BE8C9C1B3}" {
+   Priority 4
+   PriorityAgainstVehicles 37
+   UsedAgainst 1
+   IndirectlyUsedAgainst 1
+  }
+  MeshObject "{51EC93F29BA5F234}" {
+   Object "{F4C76CC6740BD4A6}Assets/Weapons/Grenades/RGD5/Grenade_Rgd5.xob"
+  }
+ }
+}

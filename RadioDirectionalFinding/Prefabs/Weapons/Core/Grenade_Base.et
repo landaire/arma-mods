@@ -1,0 +1,121 @@
+GenericEntity : "{A9EF01A7A6FE60CD}Prefabs/Weapons/Core/Throw_Base.et" {
+ ID "5D73670E82296968"
+ components {
+  SoundComponent "{57227A5D228316FB}" {
+   Filenames + {
+    "{E93E101E7ACA2172}Sounds/Weapons/_SharedData/Drop/Weapons_Drop_Grenade.acp"
+   }
+  }
+  GrenadeMoveComponent "{651E630B28FF349B}" {
+   InitSpeed 35
+   Mass 0.2
+   TimeToLive 4
+   DeleteWhenStop 0
+   TriggerWhenStop 0
+   LayerPreset "Projectile"
+   CollisionEnabled 1
+   ProjectileEffects {
+    ProjectileDamage "{651E630B28FF3360}" {
+    }
+   }
+   BallisticTableConfig "{83BDD53BB660CDAE}Configs/Weapons/AIBallisticTables/AIBT_Grenade_Base.conf"
+   MinimalSpeedScale 1
+  }
+  InventoryItemComponent "{651E630B28FF3368}" {
+   Attributes SCR_ItemAttributeCollection "{651E630B28FF336E}" {
+    ItemPhysAttributes ItemPhysicalAttributes "{651E630B28FF336D}" {
+     SizeSetupStrategy Manual
+     ItemDimensions 5 5 5
+     RestingUP Right
+    }
+    ItemAnimationAttributes ItemAnimationAttributes "{651E630B28FF3377}" {
+     IkSettings {
+      ItemIKSettings "{651E630B28FF3376}" {
+       MovementSpeedRange 0 3
+       IkSettingsStand 0
+       IkSettingsCrouch 0
+       IkSettingsProne 0
+      }
+      ItemIKSettings "{651E630B28FF3374}" {
+       Lowered 1
+       InAds 0
+       OutAds 0
+      }
+      ItemIKSettings "{651E630B28FF337A}" {
+       Jumping 1
+       InAds 0
+       OutAds 0
+      }
+      ItemIKSettings "{651E630B28FF3379}" {
+       ProneTurn 1
+       IkSettingsStand 4
+      }
+     }
+     AnimationInstance "{4FCBEA45CAEBC9C0}anims/workspaces/player/player_main_1h.asi"
+     ExcludeBonesBlend {
+      "RightHandProp"
+     }
+    }
+    CustomAttributes {
+     PreviewRenderAttributes "{651E630B28FF3342}" {
+      CameraPreset Left
+      CameraOrbitAngles -25 -25 0
+      CameraDistanceToItem 0.7
+      FOV 10
+      AnimationInstance "{CD706CDA25024989}anims/workspaces/player/player_inventory_1handed.asi"
+     }
+     CharacterModifierAttributes "{651E630B28FF3346}" {
+     }
+    }
+    m_Size SLOT_1x1
+   }
+  }
+  MeshObject "{651E630B28FF334B}" {
+   Object "{A043E13BAC03CF2C}Assets/Weapons/Grenades/M67/Grenade_M67.xob"
+   PixelSizeScale 2
+  }
+  RigidBody "{651E630B28FF3350}" {
+   Mass 0.3
+   LinearDamping 0.4
+   AngularDamping 0.6
+   SimState None
+   ModelGeometry 1
+   CCDRadius 0.1
+  }
+  SCR_MeleeWeaponProperties "{651E630B28FF3356}" {
+  }
+  WeaponComponent "{651E630B28FF3354}" {
+   isThrowable 1
+   WeaponType FragGrenade
+   shouldHandleObstruction 0
+   SoundInt 1000000
+   UIInfo GrenadeUIInfo "{651E630B28FF335A}" {
+    Name "#AR-Weapon_Grenade_Name"
+    Description "#AR-Weapon_Grenade_Name"
+    Icon ""
+    m_bShowAmmoTypeText 1
+    m_eAmmoTypeFlags FRAG
+   }
+   WeaponSlotType "grenade"
+  }
+  ActionsManagerComponent "{6D23670EA6111D9B}" {
+   additionalActions {
+    SCR_PickUpItemAction "{54F084156112C605}" : "{F39A4E9B190C1846}Prefabs/Characters/Core/Actions/PickUpItemAction.conf" {
+    }
+    SCR_EquipWeaponAction "{54F0841551922D85}" : "{356D19E2210E4C48}Prefabs/Characters/Core/Actions/EquipWeaponAction.conf" {
+     "Sort Priority" 1
+    }
+   }
+  }
+  WeaponGamepadEffectsManagerComponent "{651E630B28FF335C}" {
+   "Default Chambered Trigger effect" GamepadTriggerEffect "{61E2CE7080FDE269}" : "{94C74F88DE16C035}Prefabs/Weapons/Core/Configs/TriggerEffects/Charged/TriggerEffect_ChargedGrenade.conf" {
+   }
+   "Default ADS Trigger effect" GamepadTriggerEffect "{61E2CE7086BC71FB}" : "{6530C0968F683078}Prefabs/Weapons/Core/Configs/TriggerEffects/ADS/TriggerEffect_ADSGrenade.conf" {
+   }
+   "Default Empty Fire Trigger effect" GamepadTriggerEffect "{61E2CE70BE5E36C1}" : "{D84EB487830D98D6}Prefabs/Weapons/Core/Configs/TriggerEffects/Empty/TriggerEffect_EmptyGrenade.conf" {
+   }
+   "Default Firing Trigger effect" GamepadTriggerEffect "{61E2CE70B43ECC9B}" : "{F1D7E4011F8ECB17}Prefabs/Weapons/Core/Configs/TriggerEffects/Fire/TriggerEffect_FireGrenade.conf" {
+   }
+  }
+ }
+}

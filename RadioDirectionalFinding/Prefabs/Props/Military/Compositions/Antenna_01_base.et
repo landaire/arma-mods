@@ -1,0 +1,14 @@
+GenericEntity : "{0ED45E4A5AF6CD38}Prefabs/Props/Core/Antenna_Base.et" {
+ ID "52628D6C80C2F99C"
+ components {
+  ScriptedRadioComponent "{5CB8818C71F12C73}" {
+   Transceivers {
+    RelayTransceiver "{651E5416DDA83D6C}" {
+     "Transmitting Range" 2000
+    }
+   }
+  }
+  Hierarchy "{651E5416DDA83D78}" {
+  }
+ }
+}

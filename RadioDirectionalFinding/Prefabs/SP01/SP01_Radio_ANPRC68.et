@@ -1,0 +1,150 @@
+GenericEntity : "{73950FBA2D7DB5C5}Prefabs/Items/Equipment/Radios/Radio_ANPRC68.et" {
+ ID "508AB2013EEE1E00"
+ components {
+  SCR_CommunicationSoundComponent "{651E541456DB2E98}" {
+   Filenames {
+    "{994B3E10E8CD5242}Sounds/VO/SP01/VO_Gautlet.acp" "{4A4392C515349C10}Sounds/VO/SP01/VO_RedOne.acp" "{023239DD07AA7850}Sounds/VO/SP01/VO_RedTwo.acp"
+   }
+   IncludeInactive 1
+  }
+  ActionsManagerComponent "{508AB5952B584B2E}" {
+   ActionContexts {
+    UserActionContext "{5A6C68D89FC6B6F6}" {
+     Radius 0.01
+    }
+    UserActionContext "{5A6C68D886CBB1B0}" {
+     Radius 0.01
+    }
+    UserActionContext "{651E541456DB2E89}" {
+     ContextName "talk"
+     Position PointInfo "{651E541456DB2E8B}" {
+      Offset 0.0259 0.1797 -0.0205
+     }
+     Radius 0.15
+    }
+   }
+   additionalActions {
+    SCR_EquipGadgetAction "{553AEBE8F3B60801}" {
+    }
+    SCR_RadioTuningUserAction "{5A6C68D870C367A4}" {
+     "Sort Priority" 1
+    }
+    SCR_RadioTuningUserAction "{5A6C68D86B2E64E0}" {
+     "Sort Priority" 1
+    }
+    SCR_RadioToggleUserAction "{5A6C68D85E74BF75}" {
+     "Sort Priority" 1
+    }
+    SCR_ScenarioFrameworkRadioBaseUserAction "{651E541456DB2E8E}" {
+     ParentContextList {
+      "talk"
+     }
+     UIInfo UIInfo "{651E541456DB2E80}" {
+      Name "#AR-SP01_Radio_CreateDistraction"
+     }
+     Duration 10
+     m_iTargetFrequency 38000
+     m_aCustomConditionsList {
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2E87}" {
+       m_sVariableName "Distraction"
+       m_sVariableValue "false"
+      }
+     }
+     m_AudioSourceConfiguration SCR_AudioSourceConfiguration "{651E541456DB2EF8}" {
+      m_sSoundProject "{FD5E9674E51B9D13}Sounds/Props/Military/Radios/Props_Radios_Signals.acp"
+      m_sSoundEventName "SOUND_RADIO_SIGNAL_0-0"
+     }
+    }
+    SCR_ScenarioFrameworkRadioBaseUserAction "{651E541456DB2EFE}" {
+     ParentContextList {
+      "talk"
+     }
+     UIInfo UIInfo "{651E541456DB2EF1}" {
+      Name "#AR-SP01_Radio_Abort"
+     }
+     Duration 7
+     "Sort Priority" 1
+     m_iTargetFrequency 38000
+     m_aCustomConditionsList {
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EF3}" {
+       m_sVariableName "Abort"
+       m_sVariableValue "false"
+      }
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EF5}" {
+       m_sVariableName "AbortAllowed"
+       m_sVariableValue "true"
+      }
+     }
+     m_AudioSourceConfiguration SCR_AudioSourceConfiguration "{651E541456DB2EF4}" {
+      m_sSoundProject "{FD5E9674E51B9D13}Sounds/Props/Military/Radios/Props_Radios_Signals.acp"
+      m_sSoundEventName "SOUND_RADIO_SIGNAL_3-3"
+     }
+    }
+    SCR_ScenarioFrameworkRadioBaseUserAction "{651E541456DB2EF6}" {
+     ParentContextList {
+      "talk"
+     }
+     UIInfo UIInfo "{651E541456DB2EEF}" {
+      Name "#AR-SP01_Radio_ConfirmKill"
+     }
+     Duration 6
+     m_iTargetFrequency 38000
+     m_aCustomConditionsList {
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EEE}" {
+       m_sVariableName "TargetEliminate"
+       m_sVariableValue "true"
+      }
+     }
+     m_AudioSourceConfiguration SCR_AudioSourceConfiguration "{651E541456DB2EE0}" {
+      m_sSoundProject "{FD5E9674E51B9D13}Sounds/Props/Military/Radios/Props_Radios_Signals.acp"
+      m_sSoundEventName "SOUND_RADIO_SIGNAL_5-5"
+     }
+    }
+    SCR_ScenarioFrameworkRadioBaseUserAction "{651E541456DB2EE3}" {
+     ParentContextList {
+      "talk"
+     }
+     UIInfo UIInfo "{651E541456DB2EE5}" {
+      Name "#AR-SP01_Radio_ReportRVPoint"
+     }
+     Duration 8
+     m_iTargetFrequency 38000
+     m_aCustomConditionsList {
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EE4}" {
+       m_sVariableName "Extraction"
+       m_sVariableValue "false"
+      }
+     }
+     m_AudioSourceConfiguration SCR_AudioSourceConfiguration "{651E541456DB2EE7}" {
+      m_sSoundProject "{FD5E9674E51B9D13}Sounds/Props/Military/Radios/Props_Radios_Signals.acp"
+      m_sSoundEventName "SOUND_RADIO_SIGNAL_2-1"
+     }
+    }
+    SCR_ScenarioFrameworkRadioBaseUserAction "{651E541456DB2ED9}" {
+     ParentContextList {
+      "talk"
+     }
+     UIInfo UIInfo "{651E541456DB2EDB}" {
+      Name "#AR-SP01_Radio_Acknowledge"
+     }
+     Duration 1
+     m_iTargetFrequency 38000
+     m_aCustomConditionsList {
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EA9}" {
+       m_sVariableName "Reported"
+       m_sVariableValue "false"
+      }
+      SCR_ScenarioFrameworkUserActionConditionData "{651E541456DB2EAF}" {
+       m_sVariableName "FirstDeploy"
+       m_sVariableValue "false"
+      }
+     }
+     m_AudioSourceConfiguration SCR_AudioSourceConfiguration "{651E541456DB2EAE}" {
+      m_sSoundProject "{FD5E9674E51B9D13}Sounds/Props/Military/Radios/Props_Radios_Signals.acp"
+      m_sSoundEventName "SOUND_RADIO_SIGNAL_2"
+     }
+    }
+   }
+  }
+ }
+}

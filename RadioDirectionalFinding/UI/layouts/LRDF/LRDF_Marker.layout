@@ -1,0 +1,11 @@
+FrameWidgetClass {
+ Name "rootFrame"
+ {
+  CanvasWidgetClass "{652B727D7A6BC84E}" {
+   Name "rdfCanvas"
+   Slot FrameWidgetSlot "{652B727D7A6BC854}" {
+   }
+   SizeInUnits 1024 1024
+  }
+ }
+}

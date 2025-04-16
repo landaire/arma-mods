@@ -1,0 +1,32 @@
+GenericEntity : "{3A1D5EAEA3670CEF}Prefabs/Compositions/Misc/CustomEntities/InteractionPoints/RadioStation_US_NoAffiliation.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_EditableEntityComponent "{5DD88810017D9C11}" : "{996046FE206C699A}Prefabs/Editor/Components/Default_SCR_EditableEntityComponent.ct" {
+   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+    Name "(RadioStation_US_NoAffiliation)"
+    m_sFaction "US"
+    m_aAuthoredLabels {
+    }
+    m_aAutoLabels {
+     11 1 120
+    }
+   }
+  }
+  SCR_PreviewEntityComponent "{5DD88810017E4575}" : "{6CADA7A88A6265FD}Prefabs/Editor/Components/PreviewEntityComponentClass.ct" {
+   m_bRuntime 0
+   m_aEntries {
+    SCR_BasePreviewEntry "{651E5414957AE8F6}" {
+     m_iParentID -1
+     m_Mesh "{0F55504A35401163}Assets/Props/Military/Radios/RadioStation_ANPRC77_01.xob"
+     m_Flags 0
+     m_Shape MESH
+     m_iPivotID ""
+     m_vScale 1 1 1
+     m_vPosition 0 0 0
+     m_vAngles 0 0 0
+    }
+   }
+  }
+ }
+ angleY 0
+}

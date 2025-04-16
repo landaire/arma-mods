@@ -1,0 +1,214 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{D5CBF51EA4786071}Assets/Props/Military/InteractionPoints/PersonnelService/PersonnelService_Table_US_01.xob"
+  }
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   ModelGeometry 1
+   Static 1
+  }
+  SCR_CampaignBuildingProviderComponent "{652A3D13CA0B5656}" {
+   m_sProviderDisplayName "#AR-Campaign_Building_LivingQuarters-UC"
+   m_bUseMasterProvider 1
+   m_bRegisterAtBase 1
+   m_bCanCommandAI 1
+   m_iRank SERGEANT
+   m_aBudgetsToEvaluate {
+    SCR_CampaignBuildingCampaignBudgetToEvaluateData "{652A3D13CA0B5620}" {
+     m_eBudget CAMPAIGN
+    }
+    SCR_CampaignBuildingCooldownWithRankBudgetToEvaluateData "{652A3D13CA0B5625}" {
+     m_eBudget COOLDOWN
+     m_aCustomCooldownData {
+      SCR_CooldownData "{652A3D13CA0B563B}" {
+       m_fDefaultTimeMultiplier 10
+      }
+      SCR_CooldownData "{652A3D13CA0B5639}" {
+       m_eRank CORPORAL
+       m_fDefaultTimeMultiplier 10
+      }
+      SCR_CooldownData "{652A3D13CA0B563F}" {
+       m_eRank SERGEANT
+       m_fDefaultTimeMultiplier 5
+      }
+      SCR_CooldownData "{652A3D13CA0B563E}" {
+       m_eRank LIEUTENANT
+       m_fDefaultTimeMultiplier 5
+      }
+      SCR_CooldownData "{652A3D13CA0B563D}" {
+       m_eRank CAPTAIN
+       m_fDefaultTimeMultiplier 1
+      }
+      SCR_CooldownData "{652A3D13CA0B563C}" {
+       m_eRank MAJOR
+       m_fDefaultTimeMultiplier 1
+      }
+      SCR_CooldownData "{652A3D13CA0B5632}" {
+       m_eRank COLONEL
+       m_fDefaultTimeMultiplier 1
+      }
+      SCR_CooldownData "{652A3D13CA0B5637}" {
+       m_eRank RENEGADE
+       m_fDefaultTimeMultiplier 1000
+      }
+     }
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5635}" {
+     m_eBudget RANK_PRIVATE
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5634}" {
+     m_eBudget RANK_CORPORAL
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5603}" {
+     m_eBudget RANK_SERGEANT
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5602}" {
+     m_eBudget RANK_LIEUTENANT
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5601}" {
+     m_eBudget RANK_CAPTAIN
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5600}" {
+     m_eBudget RANK_MAJOR
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5607}" {
+     m_eBudget RANK_COLONEL
+    }
+    SCR_CampaignBuildingRankBudgetToEvaluateData "{652A3D13CA0B5606}" {
+     m_eBudget RANK_GENERAL
+    }
+    SCR_CampaignBuildingMaxValueBudgetToEvaluateData "{652A3D13CA0B5604}" {
+     m_eBudget AI
+     m_bUseMasterProviderBudget 1
+     m_bShowBudgetInUI 1
+     m_iMaxValue 10
+    }
+    SCR_CampaignBuildingBudgetToEvaluateData "{652A3D13CA0B5618}" {
+     m_eBudget AI_SERVER
+     m_bShowBudgetInUI 1
+    }
+   }
+   m_aAvailableTraits {
+    4
+   }
+  }
+  SCR_CatalogEntitySpawnerComponent "{652A3D13CA0B561D}" {
+   Enabled 0
+   m_eType BARRACKS
+   m_eBuildingLabel SERVICE_LIVING_AREA
+   m_sDelegatePrefab "{A5EFF5B93C15728E}Prefabs/Systems/Services/ServicePointDelegate_Barracks.et"
+   m_bNeedAllLabels 0
+   m_bSuppliesConsumptionEnabled 1
+   m_bEnableGracePeriod 1
+   m_fGracePeriodTime 60
+   m_fGracePeriodAreaRange 100
+   m_fPostGracePeriodRefundMultiplier 0.25
+  }
+  SCR_DefenderSpawnerComponent "{652A3D13CA0B5611}" {
+   Enabled 0
+   m_fMaxSlotDistance 2
+   m_sDefaultWaypointPrefab "{D9C14ECEC9772CC6}PrefabsEditable/Auto/AI/Waypoints/E_AIWaypoint_Defend.et"
+   m_eType BARRACKS
+   m_eBuildingLabel SERVICE_LIVING_AREA
+   m_sDelegatePrefab "{A5EFF5B93C15728E}Prefabs/Systems/Services/ServicePointDelegate_Barracks.et"
+   m_fRespawnDelay 60
+   m_bSuppliesConsumptionEnabled 1
+  }
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" : "{76DA308CC9E2AB84}Prefabs/Props/Core/DestructionMultiPhase_Base.ct" {
+   "Additional hit zones" {
+    SCR_HitZone Default {
+     DamageReduction 10
+     DamageThreshold 10
+    }
+   }
+   m_fBaseHealth 1500
+   m_fDamageThresholdMaximum 50000
+   m_DestroySpawnObjects {
+    SCR_DebrisSpawnable "{652A3D13CA0B56E8}" {
+     m_ModelPrefabs {
+      "{CAD2F5432B09BA7F}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_07.xob" "{BDD89DCBDFAB550F}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_06.xob" "{BA1F679AB92DEFCC}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_01.xob" "{DCDB8357243E4E1A}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_02_dbr_02.xob"
+     }
+     m_fMass 30
+     m_fRandomVelocityLinear 1
+     m_eMaterialSoundType METAL_LIGHT
+    }
+    SCR_DebrisSpawnable "{652A3D13CA0B56E6}" {
+     m_ModelPrefabs {
+      "{2301DE03A4CADE5C}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_02.xob" "{540BB68B5068312C}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_03.xob" "{53CC4CDA36EE8BEF}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_04.xob" "{24C62452C24C649F}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_01_dbr_05.xob" "{ABD1EBDFD09CA16A}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_02_dbr_03.xob" "{45C53ACE39D97F8A}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_02_dbr_01.xob" "{34D4FE804D7B3B3B}Assets/Props/Military/InteractionPoints/PersonnelService/Dst/PersonnelService_Table_01_dst_02.xob"
+     }
+     m_fMass 20
+     m_fRandomVelocityLinear 1
+     m_eMaterialSoundType WOOD_PLANK_SMALL
+    }
+    SCR_ParticleSpawnable "{652A3D13CA0B56E4}" {
+     m_Particle "{63D673751320F318}Particles/Props/Dest_Prop_Wood_Medium.ptc"
+    }
+   }
+   m_eMaterialSoundType BREAK_WOOD_SOLID
+  }
+  SCR_FactionAffiliationComponent "{652A3D13CA0B56FF}" {
+  }
+  SCR_ResourceComponent "{652A3D13CA0B56FE}" {
+   m_aConsumers {
+    SCR_ResourceConsumerServicePoint "{5DB899352AAD1E26}" : "{E761223AE2D4E89F}Configs/Resources/Supplies/Consumers/Consumer_Spawner_Group.conf" {
+    }
+   }
+   m_aGenerators {
+    SCR_ResourceGeneratorServicePoint "{5DB899350DBDB605}" : "{690ED565233FF6B2}Configs/Resources/Supplies/Generators/Generator_Spawner_Group.conf" {
+    }
+   }
+  }
+  SCR_ServicePointComponent "{652A3D13CA0B56F3}" {
+   m_eType BARRACKS
+   m_eBuildingLabel SERVICE_LIVING_AREA
+   m_sDelegatePrefab "{A5EFF5B93C15728E}Prefabs/Systems/Services/ServicePointDelegate_Barracks.et"
+  }
+  ActionsManagerComponent "{652A3D13CA0B56F0}" {
+   ActionContexts {
+    UserActionContext "{652A3D13CA0B56F7}" {
+     ContextName "SCR_CatalogSpawnerUserAction"
+     Position PointInfo "{652A3D13CA0B56F5}" {
+      Offset 0.35 1.2 -0.07
+      Angles 0 -16.0729 0
+     }
+     Radius 0.5
+     Omnidirectional 0
+    }
+    UserActionContext "{652A3D13CA0B56CA}" {
+     ContextName "SCR_EnableDefendersAction"
+     Position PointInfo "{652A3D13CA0B56C9}" {
+      Offset -0.3 1.5 -0.64
+     }
+     Radius 0.5
+    }
+   }
+   additionalActions {
+    SCR_EnableDefendersAction "{652A3D13CA0B56CC}" {
+     ParentContextList {
+      "SCR_EnableDefendersAction"
+     }
+     VisibilityRange 10
+     Duration 0.5
+    }
+    SCR_CampaignBuildingStartUserAction "{652A3D13CA0B56C3}" {
+     ParentContextList {
+      "SCR_CatalogSpawnerUserAction"
+     }
+     UIInfo UIInfo "{652A3D13CA0B56C1}" {
+      Name "#AR-Action_RequestPersonnel"
+     }
+     VisibilityRange 10
+     Duration 0.5
+     m_sActionNameNoSupplies "#AR-Action_RequestPersonnel_NoSupplies"
+    }
+   }
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+  }
+  Hierarchy "{652A3D13CA0B56DB}" {
+  }
+ }
+ coords 795.475 0 502.38
+}

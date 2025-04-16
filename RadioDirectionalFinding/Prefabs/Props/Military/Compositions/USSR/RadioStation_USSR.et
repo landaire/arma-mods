@@ -1,0 +1,10 @@
+GenericEntity : "{12DFA1CC555DFEF4}Prefabs/Props/Military/Compositions/RadioStation_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_FactionAffiliationComponent "{5CB6D5B110622424}" {
+   "faction affiliation" "USSR"
+  }
+ }
+ coords -0.01 0.899 -0.17
+ angleY 4.524
+}

@@ -1,0 +1,76 @@
+GenericEntity {
+ ID "651E54140AD165C2"
+ components {
+  SCR_CampaignMilitaryBaseComponent "{651E54140AD1CB14}" {
+   m_iRadius 10
+   m_bShowNotifications 0
+   m_sBaseName "Tower"
+   m_sBaseNameUpper "TOWER"
+   m_eType RELAY
+  }
+  SCR_CampaignMilitaryBaseMapDescriptorComponent "{651E54140AD1CB0A}" {
+   MainType "Radio/ Tower"
+   m_GraphLinesData SCR_GraphLinesData "{651E54140AD1CB0E}" {
+   }
+  }
+  SCR_CoverageRadioComponent "{651E54140AD1CB00}" {
+   "Turned on" 0
+   Transceivers {
+    RelayTransceiver "{651E54140AD1CB05}" {
+     "Transmitting Range" 3000
+     "Frequency resolution" 1
+    }
+   }
+  }
+  SCR_EditableSystemComponent "{651E54140AD1CB07}" {
+   m_EntityType SYSTEM
+   m_UIInfo SCR_EditableDescriptorUIInfo "{651E54140AD1CB79}" {
+    Name "#AR-EditableEntity_TransmitterTower_01_Name"
+    Icon "{DD5F23CBB1731598}UI/Textures/Editor/EditableEntities/Systems/EditableEntity_System_Base.edds"
+   }
+   m_EntityInteraction SCR_EditableEntityInteraction "{651E54140AD1CB71}" {
+   }
+   m_bAutoRegister ALWAYS
+   m_Flags 2052
+  }
+  SCR_FactionAffiliationComponent "{651E54140AD1CB72}" {
+   "faction affiliation" "FIA"
+  }
+  RplComponent "{651E54140AD1CB75}" {
+   Streamable Disabled
+  }
+ }
+ {
+  GenericEntity : "{03B44EA7652D0D17}Prefabs/Props/Military/Radios/RadioStation_R123M_01.et" {
+   ID "651E54140AD165C1"
+   components {
+    ActionsManagerComponent "{651E54140AD1CB6B}" {
+     ActionContexts {
+      UserActionContext "{651E54140AD1CB6D}" {
+       ContextName "CampaignReconfigureRelay"
+       Position PointInfo "{651E54140AD1CB6F}" {
+       }
+      }
+     }
+     additionalActions {
+      SCR_CampaignReconfigureRelayUserAction "{651E54140AD1CB60}" {
+       ParentContextList {
+        "CampaignReconfigureRelay"
+       }
+       UIInfo UIInfo "{651E54140AD1CB62}" {
+        Name "#AR-Campaign_Action_ReconfigureRelay"
+       }
+       Duration 10
+      }
+     }
+    }
+   }
+   {
+    GenericEntity : "{811ECBE58F51D9A2}Prefabs/MP/Campaign/Assets/CampaignHQRadioBase.et" {
+     ID "651E54140AD1CB13"
+     coords 0 0 0
+    }
+   }
+  }
+ }
+}

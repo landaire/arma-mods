@@ -1,0 +1,173 @@
+GenericEntity : "{4CC2C69DE1AEF103}Prefabs/Props/Core/Destructible_Props_Base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  FactionAffiliationComponent "{651E63A0386E6F20}" {
+   "faction affiliation" "USSR"
+  }
+  MeshObject "{5872F0EB7FA40561}" {
+   Object "{F63FB77CF5C853D7}Assets/Items/Equipment/Backpacks/Backpack_Kolobok/Backpack_Kolobok_item.xob"
+  }
+  RigidBody "{5872F0EB7DFB5A9D}" {
+   Mass 20
+   CenterOfMass 0 0.5 0
+   ResponseIndex "MediumDestructible"
+   ModelGeometry 1
+   Static 1
+  }
+  SCR_DeployableInventoryItemReplacementComponent "{651E63A0386E6F16}" {
+   m_vItemPosition PointInfo "{651E63A0386E6F1B}" {
+    Offset 0 0.0751 0.4252
+    Angles 42.4703 0 0
+   }
+  }
+  SCR_DestructionMultiPhaseComponent "{5624A88D86EFE8BA}" : "{76DA308CC9E2AB84}Prefabs/Props/Core/DestructionMultiPhase_Base.ct" {
+   Enabled 1
+   "Additional hit zones" {
+    SCR_HitZone Default {
+     MaxHealth 10000
+    }
+   }
+   m_fBaseHealth 500
+   m_eMaterialSoundType BREAK_MATRESS
+  }
+  PerceivableComponent "{651E63A0386E6F03}" {
+   "Additional aim points" {
+    AimPoint "{651E63A0386E6F01}" {
+     AimPointPosition PointInfo "{651E63A0386E6F00}" {
+      Offset 0 0.2119 0
+     }
+     AimpointChecked 1
+     VsibilityChecked 1
+     Dimension 0.25
+    }
+   }
+   IlluminationLvPerLight 4
+  }
+  RplComponent "{5624A88DC2D9928D}" {
+   Enabled 1
+   "Rpl State Override" Runtime
+  }
+  Hierarchy "{651E63A0386E6F04}" {
+  }
+ }
+ coords 0.22 -0.002 0.679
+ {
+  $grp GenericEntity {
+   {
+    ID "651E63A038613DF4"
+    components {
+     MeshObject "{651E63A0386E6F7D}" {
+      Object "{1094AFEF74D8E3E9}Assets/Items/Equipment/Compass/Compass_Adrianov/Compass_Adrianov.xob"
+     }
+     Hierarchy "{651E63A0386E6F63}" {
+     }
+    }
+    coords -0.517 0.019 0.333
+    angleX -5.585
+    angleY 60.032
+   }
+   {
+    ID "651E63A038613DF5"
+    components {
+     MeshObject "{651E63A0386E6F79}" {
+      Object "{43C3228D56519502}Assets/Items/Equipment/Canteens/Canteen_Soviet/Canteen_Soviet_01.xob"
+     }
+     Hierarchy "{651E63A0386E6F7F}" {
+     }
+    }
+    coords -0.456 0.016 -0.198
+    angleX 86.723
+    angleY 74.46
+    angleZ 150.715
+   }
+   {
+    ID "651E63A038613DF6"
+    components {
+     MeshObject "{651E63A0386E6F71}" {
+      Object "{2D6AEB8B581FCA04}Assets/Items/Medicine/FieldDressing_01/FieldDressing_USSR_01/FieldDressing_USSR_01.xob"
+     }
+     Hierarchy "{651E63A0386E6F7A}" {
+     }
+    }
+    coords -0.428 0 0.028
+   }
+   {
+    ID "651E63A038614062"
+    components {
+     MeshObject "{651E63A0386E6F0A}" {
+      Object "{E443663E5241622A}Assets/Items/Equipment/Maps/Map_Paper_01/Map_Paper_01_folded.xob"
+     }
+     Hierarchy "{651E63A0386E6F0C}" {
+     }
+    }
+    coords -0.445 0 0.267
+    angleY -80.006
+   }
+   {
+    ID "651E63A03861E247"
+    components {
+     MeshObject "{651E63A0386E6F60}" {
+      Object "{30664C42D09E1831}Assets/Items/Equipment/Flashlights/Flashlight_Soviet_01/Flashlight_Soviet_01.xob"
+     }
+     Hierarchy "{651E63A0386E6F65}" {
+     }
+    }
+    coords -0.22 0.021 0.094
+    angleX 6.522
+    angleY -80.073
+    angleZ -0.578
+   }
+   {
+    ID "651E63A03861EBEA"
+    components {
+     MeshObject "{651E63A0386E6F6B}" {
+      Object "{6A8418E57F4017FB}Assets/Items/Equipment/Accessories/Pouch_Medical_Soviet/Pouch_Medical_Soviet.xob"
+     }
+     Hierarchy "{651E63A0386E6F6F}" {
+     }
+    }
+    coords -0.143 0.018 -0.168
+    angleX 4.741
+    angleY -110.878
+   }
+   {
+    ID "651E63A0386E6F38"
+    components {
+     MeshObject "{651E63A0386E6F6E}" {
+      Object "{3A7FE59CB8D7D9B3}Assets/Items/Equipment/Accessories/ETool_MPL50/ETool_MPL50_carrier.xob"
+     }
+     Hierarchy "{651E63A0386E6F53}" {
+     }
+    }
+    coords -0.215 -0.001 0.098
+    angleX 89.966
+    angleY 45
+    angleZ -135
+   }
+   {
+    ID "651E63A0386E6F3F"
+    components {
+     MeshObject "{651E63A0386E6F51}" {
+      Object "{1875570185471308}Assets/Items/Equipment/Accessories/ETool_MPL50/ETool_MPL50.xob"
+     }
+     Hierarchy "{651E63A0386E6F57}" {
+     }
+    }
+    coords -0.214 0.018 -0.067
+   }
+  }
+  GenericEntity : "{CDCC313B2FB76FE7}Prefabs/Items/Medicine/FieldDressing_01/Gauze_01.et" {
+   ID "651E63A0386E6F3D"
+   components {
+    InventoryItemComponent "{5222EB4D0C73006B}" {
+     Enabled 0
+    }
+    ActionsManagerComponent "{508AB5952B584B2E}" {
+     Enabled 0
+    }
+   }
+   coords -0.387 -0.009 -0.065
+   angleY -28.127
+  }
+ }
+}

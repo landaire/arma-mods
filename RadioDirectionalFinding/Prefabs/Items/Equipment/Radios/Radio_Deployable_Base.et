@@ -1,0 +1,166 @@
+GenericEntity : "{5879D8E9C56E358D}Prefabs/Items/Core/Radio_base.et" {
+ ID "508AB2013EEE1E00"
+ components {
+  SoundComponent "{651E63A2F33285CF}" {
+   Filenames {
+    "{5409F2998421DA59}Sounds/Items/Equipment/Radios/Items_Radio_Inspection_Actions.acp" "{4AB5F7FA7BB2CCBF}Sounds/Items/_SharedData/PickUp/Items_PickUp_RespawnKit.acp" "{77EF656D5DAC6FD5}Sounds/Items/_SharedData/Drop/Items_Drop_RespawnKit.acp" "{EFFB3D8065A486E3}Sounds/Items/DeployableRadio/Items_DeployableRadio.acp"
+   }
+   DistanceManagement 0
+   IncludeInactive 1
+   SoundPoints {
+    SoundPointInfo RadioPosition {
+     Offset 0 1.2272 0
+    }
+   }
+  }
+  BaseRadioComponent "{5A30BAE7673C63CA}" {
+   "Encryption key" "chickenNuggets"
+   Transceivers {
+    RadioTransceiver "{651E63A2F332863D}" {
+     ChannelFrequency 48000
+     "Transmitting Range" 2000
+     "Min tunable frequency" 30000
+     "Max tunable frequency" 76000
+    }
+   }
+  }
+  MeshObject "{5A30BAE7673C63D1}" {
+   Object "{D29C3ADD27E3E71A}Assets/Items/Equipment/Radios/Radio_ANPRC77/Radio_ANPRC77_01_item.xob"
+  }
+  RigidBody "{5A30BAE7673C63D3}" {
+   ModelGeometry 1
+  }
+  SCR_DeployableInventoryItemInventoryComponent "{5222EB4D0C73006B}" {
+   Attributes SCR_ItemAttributeCollection "{5222EB4D0A2B466B}" {
+    ItemDisplayName UIInfo "{5222EB4D07D865FA}" {
+     Name "#AR-Item_ANPRC77_Name"
+     Description "#AR-Item_ANPRC77_Description"
+     Icon "{CF038C42DC15871B}UI/Textures/VON/ANPRC77-100px_UI.edds"
+    }
+    ItemPhysAttributes ItemPhysicalAttributes PhysicalAttributes {
+     Weight 9
+     SizeSetupStrategy Manual
+     ItemDimensions 25 25 25
+     ItemVolume 10000
+    }
+    CustomAttributes {
+     PreviewRenderAttributes "{651E63A2F332862F}" {
+      CameraPreset Back
+      CameraOrbitAngles 25 -25 180
+      CameraDistanceToItem 3
+      CameraOffset 0 -0.25 0
+      FOV 10
+      PreviewModel "{BA5D2EE89E84BDA3}Assets/Items/Equipment/Radios/Radio_ANPRC77/Radio_ANPRC77_01.xob"
+     }
+     SCR_VONPreviewAttributes "{651E63A2F332862C}" {
+      CameraOrbitAngles 0 210 0
+      CameraDistanceToItem 1.8
+      CameraOffset 0 0 0
+      FOV 40
+     }
+    }
+    m_Size SLOT_2x2
+    m_SlotType SLOT_BACKPACK
+   }
+  }
+  SCR_RadioComponent "{5A30BAE7673C63D4}" {
+   m_bCanBeHeld 0
+   m_iRadioCategory MANPACK
+   m_iRadioType ANPRC77
+  }
+  SCR_RestrictedDeployableSpawnPointComponent "{651E63A2F3328617}" {
+   m_sSpawnPointPrefab "{35347E7AA6BDF8CE}Prefabs/MP/Spawning/ItemSpecifics/RestrictedDeployableSpawnPoint_Radio.et"
+   m_bQuerySpawnPoints 1
+   m_fQueryRadiusBases 80
+   m_fQueryRadiusSpawnPoints 80
+   m_fQueryRadiusCharacters 60
+   m_bQueryAllBases 1
+  }
+  SCR_SoundDataComponent "{5B18D20ED0099A17}" {
+   Enabled 0
+   m_aAudioSourceConfiguration {
+    SCR_AudioSourceConfiguration "{5B18D209080A5D15}" {
+     m_sSoundProject "{4AB5F7FA7BB2CCBF}Sounds/Items/_SharedData/PickUp/Items_PickUp_RespawnKit.acp"
+    }
+    SCR_AudioSourceConfiguration "{5B18D2091B885AE6}" {
+     m_sSoundProject "{4AB5F7FA7BB2CCBF}Sounds/Items/_SharedData/PickUp/Items_PickUp_RespawnKit.acp"
+    }
+    SCR_AudioSourceConfiguration "{5B18D20930D9E274}" {
+     m_sSoundProject "{77EF656D5DAC6FD5}Sounds/Items/_SharedData/Drop/Items_Drop_RespawnKit.acp"
+    }
+   }
+  }
+  BaseLoadoutClothComponent "{651E63A2F332861E}" {
+   AreaType LoadoutBackpackArea "{651E63A2F332861C}" {
+   }
+   WornModel "{BA5D2EE89E84BDA3}Assets/Items/Equipment/Radios/Radio_ANPRC77/Radio_ANPRC77_01.xob"
+   ItemModel "{D29C3ADD27E3E71A}Assets/Items/Equipment/Radios/Radio_ANPRC77/Radio_ANPRC77_01_item.xob"
+   VisibleInVehicle 0
+   DepthBack 0.025
+   OffsetShoulderLeft -0.1
+   OffsetShoulderRight 0.1
+   DeflatedModel "{4208B441C7591373}Assets/Items/Equipment/Radios/Radio_ANPRC77/Radio_ANPRC77_01_Inflated.xob"
+   AreaTypeWhenModelChange {
+    LoadoutArmoredVestSlotArea "{651E63A2F3328606}" {
+    }
+   }
+  }
+  ActionsManagerComponent "{508AB5952B584B2E}" {
+   ActionContexts {
+    UserActionContext "{508AC2ABEC97066C}" {
+     Position PointInfo "{508AC2ABEAC4A0F5}" {
+      Offset 0 0.1504 -0.1458
+     }
+    }
+   }
+   additionalActions {
+    SCR_DeployableInventoryItemPickUpAction "{51EC842E3A187379}" {
+    }
+    SCR_DeployableInventoryItemEquipClothAction "{553AEBE8F3B60801}" : "{83B98F1A96591AC6}Prefabs/Characters/Core/Actions/EquipClothAction.conf" {
+    }
+    SCR_DeployInventoryItemRestrictedAction "{651E63A2F332860F}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{651E63A2F332860E}" {
+      Name "#AR-DeployableSpawnPoints_Deploy"
+     }
+     Duration 5
+    }
+    SCR_DismantleInventoryItemBaseAction "{651E63A2F332860C}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{651E63A2F3328672}" {
+      Name "#AR-DeployableSpawnPoints_Dismantle"
+     }
+    }
+    SCR_ShowDeployableSpawnPointInfo "{651E63A2F3328671}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{651E63A2F332867B}" {
+      Name "#AR-DeployableSpawnPoints_ShowRespawnInfo"
+     }
+    }
+    SCR_OpenDeployableSpawnPointStorageAction "{651E63A2F332867A}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{651E63A2F3328679}" {
+      Name "#AR-Inventory_OpenStorage"\
+      ""
+     }
+    }
+    SCR_ToggleDeployableSpawnPointLoadoutAction "{651E63A2F3328678}" {
+     ParentContextList {
+      "default"
+     }
+     UIInfo UIInfo "{651E63A2F332B128}" {
+      Name "#AR-DeployableSpawnPoints_ToggleLoadouts"
+     }
+    }
+   }
+  }
+ }
+}

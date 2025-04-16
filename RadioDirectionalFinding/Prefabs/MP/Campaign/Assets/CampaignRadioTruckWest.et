@@ -1,0 +1,17 @@
+Vehicle : "{36BDCC88B17B3BFA}Prefabs/Vehicles/Wheeled/M923A1/M923A1_command.et" {
+ ID "5206D4E79715C115"
+ components {
+  SCR_MapDescriptorComponent "{6523040D3336A019}" {
+   VisibleOnMap 1
+   MainType "Radio/ Tower"
+   Faction 2
+  }
+  SlotManagerComponent "{55BCE45E438E4CFF}" {
+   Slots {
+    RegisteringComponentSlotInfo Radio {
+     Prefab "{DCE16D92C350D64F}Prefabs/Vehicles/Wheeled/M923A1/M923A1_combox.et"
+    }
+   }
+  }
+ }
+}
