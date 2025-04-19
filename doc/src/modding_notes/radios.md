@@ -1,0 +1,28 @@
+# Radios
+
+- `BaseRadioComponent`
+	- The root radio , handles encryption key / power
+	- Also handles number of transceivers per radio 
+- `SCR_CoverageRadioComponent`
+	- Actual implementation of a radio
+- `SCR_RadioComponent`
+	- What handheld radios have
+- `RadioStation_base.et`
+	- Radio relay
+- `SCR_AntennaServicePointComponent`
+	- Radio antennas -- used in `SCR_CampaignMilitaryBaseComponent` in `RecalculateRadioRange`
+	- `Antenna_01_base.et` has the `SCR_AntennaServicePointComponent`
+	- Sets the `BaseRadioComponent` power enabled to false
+- `ConflictMilitaryBase.et`
+	- Has the `SCR_CoverageRadioComponent`
+	- HQ is used for signal coverage
+- `SCR_RestrictedDeployableSpawnPointComponent`
+	- Handles deployable spawn points
+- `Radio_Deployable_Base.et`
+	- The actual deployable radio
+- `SCR_CampaignFeedbackComponent`
+	- `CheckPlayerInsideRadioRange()` checks if the player is in radio range of the HQ
+- `SCR_CampaignMilitaryBaseComponent`
+	- `IsHQRadioTrafficPossible` checks if the base can communicate with the HQ
+- `SCR_VONController` activates the VON broadcast (`ActionVONBroadcast` and `ActivateVON`)
+- 

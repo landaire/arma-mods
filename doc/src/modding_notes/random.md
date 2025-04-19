@@ -1,0 +1,41 @@
+# Random Uncategorized Notes
+
+- SCR_XPHandlerComponent
+	- Seems to handle the player XP progression
+- Instigator -> InstigatorType differentiates players from AI
+- SCR_InstigatorContextData -> HasAnyVictimKillerRelation
+	- Can tell if someone committed suicide, killed by enemy, enemy AI, etc.
+	- Can also tell if someone was in disguise
+- Post on loading external scripts: https://discord.com/channels/105462288051380224/976155351999201390/1201531686706483260
+- SCR_ResourceConsumer
+	- Consumes resources from a base
+	- IsAllowed checks if you're allowed to consume resources
+	- RequestConsumtion requests the actual resource consumption
+- SCR_ResourceContainer
+	- OnResourcesChanged is triggered when the resources value changes
+- SCR_PlacingEditorComponent
+	- Does a bunch of checks to see if a player can spawn items
+	- Attaches the author to the item in `CreateEntityServer`
+- SCR_CampaignBuildingPlacingEditorComponent
+	- Has `IsThereEnoughBudgetToSpawnItem` and `IsThereEnoughBudgetToSpawn` which ultimately checks if the entity source  can be spawned with the known budget constraints
+	- Also has `GetEntityBudgetValue` which grabs the cost of the item
+- `SCR_ResourcePlayerControllerInventoryComponent::TryPerformResourceConsumption` can be overridden to hijack the result of resource consumption from a container for a player. `GetOwner()` would return the `SCR_PlayerController`
+- Vehicle load is in `SCR_ResourceContainerVehicleLoadAction::PerformAction`
+	- Can probably cast `m_ResourceGenerator` to `SCR_ResourceContainer container = SCR_ResourceContainer.Cast(actor);`
+- `SCR_CampaignMilitaryBaseComponent` is the main military base component
+	- Used by the map to query info about a base such as supplies
+- Building providers:
+	- Light vehicle:
+		- ```SCRIPT : SCR_CampaignBuildingProviderComponent<0x00000168415F6FA0> (Owner : @"ENTITY:4611686018427433577" ('GenericEntity','Assets/Props/Military/InteractionPoints/VehicleService/VehicleService_Barrels_USSR_01.xob') at <3776.224365 123.066414 5427.007324> @"{B86F916928A1430F}PrefabsEditable/Auto/Props/Military/Compositions/USSR/E_VehicleService_USSR_Small.et")```
+	- Command post:
+		- ```SCRIPT : SCR_CampaignBuildingProviderComponent<0x0000016816FFBE10> (Owner : @"ENTITY:4611686018427398358" ('GenericEntity','Assets/Props/Military/InteractionPoints/BuildingService/BuildingService_Table_USSR_01.xob') at <3775.408447 122.439781 5408.812500> @"{30EBFF0BA87F68E9}PrefabsEditable/Auto/Props/Military/Compositions/USSR/E_BuildingService_USSR.et")```
+- SCR_CampaignFeedbackComponent
+	- Has `OnBaseEntered` to detect when you've entered a base
+- `SCR_CampaignTask`
+	- Handles conflict tasks
+	- `Finish` will call `AwardXP` with an XP multiplier
+- `SCR_BaseTask`
+	- Handles task assignments
+	- `AddAssignee` will add an assignee to the task
+- `SCR_MapConfig`
+	- Handles the full map configuration
