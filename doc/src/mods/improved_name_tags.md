@@ -10,11 +10,11 @@ Improves the default nametag to show additional info.
 
 Group Leader:
 
-![Group Leader](/img/mods/improved_name_tags/nametag_leader.jpg)
+![Group Leader](../img/mods/improved_name_tags/nametag_leader.jpg)
 
 Non-group member:
 
-![Non-group member](/img/mods/improved_name_tags/nametag_non_leader.jpg)
+![Non-group member](../img/mods/improved_name_tags/nametag_non_leader.jpg)
 
 ## Configuration
 
