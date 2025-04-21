@@ -1,6 +1,6 @@
 # Improved Name Tags
 
-[Download Link](https://reforger.armaplatform.com/workshop/6513700F82DCDAD3-landaire-ImprovedNameTags).
+[Download Link](https://reforger.armaplatform.com/workshop/6513700F82DCDAD3-landaire-ImprovedNameTags)
 
 Improves the default nametag to show additional info.
 
