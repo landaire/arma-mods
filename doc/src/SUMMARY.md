@@ -7,3 +7,4 @@
 - [Modding Notes](modding_notes/overview.md)
     - [Radios](modding_notes/radios.md)
     - [Random](modding_notes/random.md)
+    - [Tips & Utilities](modding_notes/utilities.md)

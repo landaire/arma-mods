@@ -5,6 +5,7 @@
 	- Also handles number of transceivers per radio 
 - `SCR_CoverageRadioComponent`
 	- Actual implementation of a radio
+	- Military bases have this component added (e.g. `MilitaryBaseAirfield`)
 - `SCR_RadioComponent`
 	- What handheld radios have
 - `RadioStation_base.et`
@@ -25,4 +26,4 @@
 - `SCR_CampaignMilitaryBaseComponent`
 	- `IsHQRadioTrafficPossible` checks if the base can communicate with the HQ
 - `SCR_VONController` activates the VON broadcast (`ActionVONBroadcast` and `ActivateVON`)
-- 
+- `SCR_RadioCoverageMapDescriptorComponent` draws the radio links
